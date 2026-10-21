@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kirti Gupta — Impact Dashboard</title>
+<meta name="description" content="Service delivery, PMO and Scrum impact portfolio of Kirti Gupta: Jira service metrics, programme delivery, responsibilities, colleague feedback, career and certifications.">
+<meta property="og:title" content="Kirti Gupta — Impact Dashboard">
+<meta property="og:description" content="Service Delivery Lead · PMO · Scrum Master — measured impact, colleague feedback and credentials.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+:root{--font-anthropic-sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--cds-gap-md:16px;--cds-dur-slow:300ms;--color-bad:#f06c7b}
+html,body{margin:0;background:#0c1227}
+body{-webkit-font-smoothing:antialiased}
+#dash-root{padding:clamp(0px,2vw,24px) 0}
+.kg a{color:inherit}
+.kg .footer{margin-top:12px;font-size:12px;color:#6b7599}
+
+/* ===== One dark theme, two accents (cyan + periwinkle), one font family ===== */
+#dash-root{--dash-gutter:0}
+.kg{
+  /* palette */
+  --bg:#0c1227; --card:#161e3b; --card-2:#1c2546; --line:#27315a;
+  --text:#f4f6fb; --muted:#9aa4c6; --faint:#6b7599;
+  --cyan:#38c6f4; --cyan-soft:rgba(56,198,244,.14); --peri:#8b8ff0; --peri-soft:rgba(139,143,240,.16);
+  --alert:#f06c7b;
+  /* map the dashboard kit's tokens onto this palette so charts and tooltips match */
+  --color-bg:var(--bg); --color-panel:var(--card); --color-fg:var(--text); --color-fg-muted:var(--muted); --color-border-line:var(--line);
+  --cds-chart-grid:#222b50; --cds-chart-axis:#2c3763; --cds-chart-muted:var(--peri);
+  --cds-surface-popover:#202a52; --cds-border:var(--line); --cds-text-secondary:var(--muted);
+  --primary:var(--cyan); --up:var(--cyan); --ink-soft:var(--peri);
+  --p-slm:var(--cyan); --p-inc:var(--peri); --p-prb:var(--peri); --p-own:var(--cyan); --p-del:var(--cyan); --p-ci:var(--peri); --p-req:var(--cyan); --p-rel:var(--peri);
+  --r:16px;
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-anthropic-sans);font-size:15px;line-height:1.5;
+  padding:clamp(16px,3.5vw,36px);border-radius:20px;
+}
+.kg>*{max-width:1120px;margin-inline:auto}
+.kg *{box-sizing:border-box}
+.kg .num{font-variant-numeric:tabular-nums}
+
+/* Type */
+.kg .kicker{font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--faint);margin:0 0 6px}
+.kg h2{font-size:clamp(1.3rem,2.3vw,1.55rem);font-weight:650;letter-spacing:-.01em;margin:0;line-height:1.25;color:var(--text)}
+.kg h3{font-size:1.05rem;font-weight:600;margin:32px 0 14px;color:var(--text)}
+.kg .lede{color:var(--muted);margin:6px 0 22px;max-width:70ch}
+.kg .figure{font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+
+/* Header */
+.kg .hero{padding:4px 0 0}
+.kg .hero h1{font-size:clamp(2rem,4.6vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0}
+.kg .hero .sub{margin:8px 0 0;color:var(--muted);font-weight:500}
+.kg .hero .take{margin:14px 0 0;max-width:64ch;color:var(--text);opacity:.9}
+.kg .glance{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:16px;margin-top:26px}
+@media (max-width:760px){.kg .glance{grid-template-columns:1fr}}
+.kg .gl{background:var(--card);border-radius:var(--r);padding:24px}
+.kg .gl .k{display:none}
+.kg .gl .v{display:block;font-size:clamp(2.4rem,4.6vw,3.2rem);color:var(--text);min-height:1em}
+.kg .gl:first-child .v{font-size:clamp(2.6rem,5.4vw,3.8rem)}
+.kg .gl .v .was{color:var(--faint);font-size:.55em;font-weight:600}
+.kg .gl .v .arr{font-size:.45em;color:var(--faint);margin:0 .3em;vertical-align:middle;font-weight:400}
+.kg .gl .lab{display:block;margin-top:12px;font-size:16px;font-weight:500;color:var(--text)}
+.kg .gl .c{display:inline-block;margin-top:12px;font-size:12px;font-weight:600;color:var(--cyan);background:var(--cyan-soft);border-radius:999px;padding:3px 10px}
+.kg nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+.kg nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;background:var(--card);border-radius:999px;padding:5px 14px}
+.kg nav a:hover{color:var(--text);background:var(--card-2)}
+
+/* Sections & cards */
+.kg section{margin-top:clamp(40px,5.5vw,56px);scroll-margin-top:16px}
+.kg .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,12.5rem),1fr))}
+.kg .grid.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr))}
+.kg .card{background:var(--card);border:0;border-radius:var(--r);padding:22px;min-width:0}
+.kg .cardh{font-weight:600;font-size:16px;margin:0}
+.kg .note{display:block;margin-top:4px;color:var(--muted);font-size:13px;line-height:1.45}
+
+/* Stat tiles: figure first, then label, then context */
+.kg .stat{display:flex;flex-direction:column}
+.kg .stat .big{order:1;display:block;font-size:clamp(2.1rem,3.8vw,2.6rem);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1;min-height:1em;color:var(--text)}
+.kg .stat .lbl{order:2;display:block;margin-top:10px;font-size:15px;font-weight:500;color:var(--text);line-height:1.35}
+.kg .stat .ctx{order:3;display:block;margin-top:8px;font-size:13px;color:var(--muted);line-height:1.4}
+.kg .stat .big .was{color:var(--faint);font-size:.55em;font-weight:600}
+.kg .stat .big .arr{font-size:.45em;color:var(--faint);margin:0 .25em;vertical-align:middle;font-weight:400}
+.kg .stat .big .of{color:var(--faint);font-size:.55em;font-weight:600}
+.kg .good{color:var(--cyan)}
+.kg .stat .ctx .good{font-weight:600}
+
+/* Chart + bars */
+.kg .chart{position:relative;min-height:240px;margin-top:14px}
+.kg .tip{position:absolute;background:var(--cds-surface-popover);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.35);padding:6px 10px;font-size:12px;color:var(--text);pointer-events:none;white-space:nowrap;display:none;z-index:2}
+.kg .tip .t{color:var(--muted)}
+.kg .sw{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.kg .bars{margin-top:20px;display:grid;gap:18px;min-height:180px}
+.kg .brow .top{display:flex;justify-content:space-between;gap:10px;font-size:14px;margin-bottom:8px}
+.kg .brow .top b{font-weight:500;color:var(--text)}
+.kg .brow .top span{color:var(--text);font-weight:600}
+.kg .btrack{position:relative;height:10px;background:#232c52;border-radius:999px;overflow:hidden}
+.kg .bres{position:absolute;inset:0 auto 0 0;border-radius:999px;background:var(--cyan)}
+
+/* RASCI */
+.kg .rkey{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);margin-bottom:14px;align-items:center}
+.kg .rkey span{display:inline-flex;align-items:center;gap:6px}
+.kg .rwrap{overflow-x:auto;border-radius:var(--r);background:var(--card)}
+.kg table.rasci{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}
+.kg .rasci caption{text-align:left;padding:18px 22px 8px;font-weight:600;font-size:14px;caption-side:top;color:var(--text)}
+.kg .rasci th{font-weight:500;color:var(--faint);text-align:center;padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.kg .rasci th:first-child,.kg .rasci td:first-child{text-align:left;padding-left:22px}
+.kg .rasci td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:center;color:var(--text)}
+.kg .rasci tbody tr:last-child td{border-bottom:0}
+.kg .rasci td:first-child{font-size:14px}
+.kg .rasci .me{background:var(--cyan-soft)}
+.kg .rasci th.me{color:var(--cyan);font-weight:600}
+.kg .rasci .star{color:var(--cyan);font-weight:700;width:32px}
+.kg .rasci+.rasci{border-top:1px solid var(--line)}
+.kg .b{display:inline-block;min-width:34px;padding:2px 6px;border-radius:6px;font-weight:700;font-size:11px}
+.kg .b-ra{background:var(--cyan);color:var(--bg)}
+.kg .b-r{border:1px solid var(--cyan);color:var(--cyan)}
+.kg .b-a{background:var(--peri);color:var(--bg)}
+.kg .b-c,.kg .b-s{border:1px solid var(--line);color:var(--muted)}
+.kg .b-i{color:var(--faint);font-weight:500}
+
+/* Feedback */
+.kg .fb-head{font-size:15px;font-weight:600;letter-spacing:.08em;color:var(--muted);margin:0 0 18px}
+.kg .qgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr))}
+.kg figure.q{position:relative;margin:0;display:flex;flex-direction:column;padding:24px 28px 26px;background:var(--card)}
+.kg .q .qtop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.kg .q .qm{font-size:30px;line-height:1;font-weight:700;color:var(--pc);opacity:.45;font-family:Georgia,serif}
+.kg .q .pill{font-size:12px;font-weight:600;color:var(--pc);background:color-mix(in srgb,var(--pc) 15%,transparent);border-radius:999px;padding:4px 12px;white-space:nowrap}
+.kg .q .quote{margin:0;font-style:italic;font-weight:600;font-size:1.08rem;line-height:1.6;color:var(--text)}
+.kg .q .by{margin-top:auto;padding-top:16px;font-size:13px;color:var(--muted)}
+
+/* Career */
+.kg .jobs{display:grid;gap:14px}
+.kg .job{display:grid;grid-template-columns:minmax(0,1fr) minmax(9rem,auto);gap:4px 24px}
+.kg .job .emp{font-size:1.05rem;font-weight:600}
+.kg .job .period{color:var(--muted);font-size:13px;display:block;margin-top:2px}
+.kg .job .hl{text-align:right;grid-row:span 2}
+.kg .job .hl .big{font-size:clamp(1.7rem,3.2vw,2.1rem);font-weight:700;letter-spacing:-.03em;line-height:1;display:block;color:var(--text)}
+.kg .job .hl .note{max-width:24ch;margin-left:auto}
+.kg .job .pts{grid-column:1 / -1;margin:8px 0 0;padding-left:1.1em;font-size:14px;line-height:1.6;color:var(--text);opacity:.92}
+.kg .job .pts li::marker{color:var(--cyan)}
+@media (max-width:560px){.kg .job{grid-template-columns:1fr}.kg .job .hl{text-align:left;grid-row:auto}.kg .job .hl .note{margin-left:0}}
+
+/* Tools + credentials */
+.kg .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.kg .chip{background:var(--card-2);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--text)}
+.kg .chip.exp{background:var(--cyan);color:var(--bg);font-weight:600}
+.kg .tkey{display:flex;gap:8px;align-items:center;margin:-6px 0 14px}
+.kg .cred .credrow{padding:10px 0;border-top:1px solid var(--line)}
+.kg .cred .cardh{margin-bottom:4px}
+.kg .cred .credrow:first-of-type{border-top:0}
+.kg .cred .cn{display:block;font-weight:500}
+.kg .cred.lead{grid-column:1 / -1}
+.kg .cred.lead .credrow{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:center}
+.kg .cred.lead .credrow .note{grid-column:1}
+.kg .cred.lead .verify{grid-column:2;grid-row:1 / span 2}
+.kg .verify{display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:var(--cyan);text-decoration:none;background:var(--cyan-soft);border-radius:999px;padding:3px 10px}
+.kg .verify:hover{background:rgba(56,198,244,.24)}
+
+.kg .method{margin-top:clamp(40px,5.5vw,56px);color:var(--faint);font-size:12.5px;line-height:1.55;border-top:1px solid var(--line);padding-top:14px}
+[data-dash-source-state=empty]{color:transparent}
+[data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+
+</style>
+</head>
+<body>
+<div id="dash-root">
+
+<div class="kg" id="kg">
+  <header class="hero" id="top">
+    <p class="kicker">IMPACT PORTFOLIO</p>
+    <h1>Kirti Gupta</h1>
+    <p class="sub">Service Delivery Lead · PMO · Scrum Master — Utrecht, Netherlands</p>
+    <p class="take">I built the service delivery function for Eneve's system team: structured triage, incident management and sprint planning that made the desk faster and more predictable for every client team.</p>
+    <div class="glance">
+      <div class="gl">
+        <span class="v figure"><span class="was">—</span><span class="arr">→</span><span>—</span></span>
+        <span class="lab">Median first response, system team desk</span>
+        <span class="c">Q2 2024 → Q4 2025</span>
+      </div>
+      <div class="gl">
+        <span class="v figure">—</span>
+        <span class="lab">Tickets I worked on that were resolved</span>
+        <span class="c">—</span>
+      </div>
+      <div class="gl">
+        <span class="v figure">—</span>
+        <span class="lab">Programme for a semi-state-owned gas market entity</span>
+        <span class="c">On time and under budget</span>
+      </div>
+    </div>
+    <nav aria-label="Sections"><a href="#impact" data-go="impact">Service impact</a><a href="#delivery" data-go="delivery">Delivery</a><a href="#rasci" data-go="rasci">How I operate</a><a href="#feedback" data-go="feedback">Colleague feedback</a><a href="#background" data-go="background">Career and skills</a></nav>
+  </header>
+
+  <section id="impact">
+    <p class="kicker">SERVICE IMPACT · ENEVE</p>
+    <h2>Service impact at Eneve</h2>
+    <p class="lede">Tickets I commented on, raised, was assigned or watched in Jira, January 2024 – March 2026.</p>
+    <div class="grid" id="kpiTiles"></div>
+    <div class="grid two" style="margin-top:var(--cds-gap-md)">
+      <div class="card" id="trendCard">
+        <p class="cardh">Tickets answered within 24 hours</p>
+        <span class="note">By quarter · quarters with at least 10 tickets</span>
+        <div class="chart" id="trend"></div>
+      </div>
+      <div class="card" id="itsmCard">
+        <p class="cardh">Resolved, by ticket type</p>
+        <span class="note">Tickets I commented on</span>
+        <div class="bars" id="itsm"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="delivery">
+    <p class="kicker">PROGRAMME DELIVERY · ENEVE</p>
+    <h2>Programme and service delivery</h2>
+    <p class="lede">Client, team and finance outcomes at Eneve, beyond Jira.</p>
+    <div class="grid" id="deliveryTiles"></div>
+  </section>
+
+  <section id="rasci">
+    <p class="kicker">RESPONSIBILITIES</p>
+    <h2>How I operate</h2>
+    <p class="lede">The RASCI I drafted for system team planning and delivery oversight. ★ marks what I carry day to day as Responsible and Accountable.</p>
+    <div class="rkey"><span><span class="b b-ra">R+A</span>Responsible + accountable</span><span><span class="b b-r">R</span>Responsible</span><span><span class="b b-a">A</span>Accountable</span><span><span class="b b-s">S</span>Supportive</span><span><span class="b b-c">C</span>Consulted</span><span><span class="b b-i">I</span>Informed</span></div>
+    <div class="rwrap" id="rasciTables"></div>
+  </section>
+
+  <section id="feedback">
+    <p class="fb-head">Peer &amp; Stakeholder Feedback — Direct Quotes</p>
+    <div class="qgrid" id="quotes"></div>
+  </section>
+
+  <section id="background">
+    <p class="kicker">BACKGROUND</p>
+    <h2>Career and skills</h2>
+    <h3>Career</h3>
+    <div class="jobs" id="roles"></div>
+    <h3>Tools and platforms</h3>
+    <div class="tkey"><span class="chip exp">Expert</span><span class="chip">Delivered with</span></div>
+    <div class="grid two" id="toolGroups"></div>
+    <h3>Certifications and knowledge areas</h3>
+    <div id="credGroups"></div>
+  </section>
+
+  <p class="method">Method: Jira figures come from my own exports. Resolution counts tickets with a Jira resolution set. First response excludes the requester and automation comments. Figures cover tickets I was involved in, not the whole organisation. No ticket content, client names or colleague names are published.</p>
+</div>
+
+
+</div>
+<script>window.__DATA__={"jira_kpis": [{"id": "tickets", "value": 2680, "label": "Tickets I worked on", "note": "Commented, raised, assigned or watched, Jan 2024 – Mar 2026"}, {"id": "projects", "value": 41, "label": "Jira projects and client spaces", "note": "Distinct projects across the four exports"}, {"id": "comments", "value": 1490, "label": "Comments driving tickets forward", "note": "On 869 tickets"}, {"id": "resolution", "value": 0.824, "label": "Tickets I commented on that reached a resolution", "note": "1174 of 1425 tickets"}, {"id": "critical", "value": 34, "label": "Critical incidents, all resolved", "note": "34 of 34 resolved"}, {"id": "sys_before", "value": 335.1, "label": "System team desk, median first response, Q2 2024", "note": "36 tickets"}, {"id": "sys_after", "value": 1.8, "label": "System team desk, median first response, Q4 2025", "note": "102 tickets"}, {"id": "sys24_before", "value": 0.306, "label": "System team desk, replied within 24h, Q2 2024", "note": ""}, {"id": "sys24_after", "value": 0.745, "label": "System team desk, replied within 24h, Q4 2025", "note": ""}, {"id": "cli_after", "value": 2.0, "label": "Client service desk, median first response, Q4 2025", "note": "111 tickets"}, {"id": "cli24_after", "value": 0.748, "label": "Client service desk, replied within 24h, Q4 2025", "note": ""}, {"id": "watch_resolution", "value": 0.778, "label": "Tickets I watched that reached a resolution", "note": "1,653 of 2,124 tickets"}, {"id": "critical_resolved", "value": 34, "label": "Critical incidents resolved", "note": ""}], "first_response": [{"quarter": "2024 Q1", "qstart": "2024-01-01", "desk": "System team desk", "tickets": 10, "median_hours": 46.6, "share_24h": 0.5}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "System team desk", "tickets": 36, "median_hours": 335.1, "share_24h": 0.306}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "System team desk", "tickets": 146, "median_hours": 6.3, "share_24h": 0.61}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "System team desk", "tickets": 138, "median_hours": 36.4, "share_24h": 0.493}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "System team desk", "tickets": 56, "median_hours": 15.0, "share_24h": 0.536}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "System team desk", "tickets": 63, "median_hours": 21.1, "share_24h": 0.524}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "System team desk", "tickets": 105, "median_hours": 15.0, "share_24h": 0.61}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "System team desk", "tickets": 102, "median_hours": 1.8, "share_24h": 0.745}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "System team desk", "tickets": 53, "median_hours": 2.4, "share_24h": 0.566}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "Client service desk", "tickets": 16, "median_hours": 308.2, "share_24h": 0.25}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "Client service desk", "tickets": 29, "median_hours": 52.6, "share_24h": 0.448}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "Client service desk", "tickets": 27, "median_hours": 4.2, "share_24h": 0.556}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "Client service desk", "tickets": 66, "median_hours": 2.0, "share_24h": 0.667}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "Client service desk", "tickets": 101, "median_hours": 1.2, "share_24h": 0.723}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "Client service desk", "tickets": 95, "median_hours": 2.9, "share_24h": 0.705}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "Client service desk", "tickets": 111, "median_hours": 2.0, "share_24h": 0.748}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "Client service desk", "tickets": 101, "median_hours": 0.6, "share_24h": 0.822}], "itsm_mix": [{"type": "Incidents", "total": 282, "resolved": 234}, {"type": "Service requests", "total": 334, "resolved": 282}, {"type": "Changes", "total": 216, "resolved": 186}, {"type": "Problem records", "total": 48, "resolved": 35}], "delivery_highlights": [{"id": "prog_budget", "value": "€3.4M", "label": "Programme for a semi-state-owned entity in the gas market, owned end to end", "note": "Gas storage, reserve prediction and trading software; CFO-sponsored; delivered on time and under budget; now one of Eneve's biggest clients"}, {"id": "prog_team", "value": "17", "label": "People on the programme delivery team", "note": "Sole PMO; held vendors accountable for deliverables"}, {"id": "clients", "value": "23", "label": "Client environments supported", "note": "Including DR tests, pen tests and DORA evidence for several clients"}, {"id": "onboardings", "value": "4", "label": "New-client onboardings delivered", "note": "Environments, kick-offs, plans and go-live sign-off, 2025–2026"}, {"id": "system_team", "value": "~20", "label": "Engineers and vendors coordinated", "note": "Operations, DevSecOps, DBA and IT support in the system team"}, {"id": "unbilled", "value": "↓ 12%", "label": "Unbilled hours", "note": "Finance data, after Jira–AFAS time-tracking alignment"}, {"id": "recurring", "value": "↓ 25%", "label": "Recurring Jira issues", "note": "After problem-management and RCA process"}], "colleague_quotes": [{"id": "q01", "practice": "Service Level Management", "quote": "…the coordination and planning setup and managed by Kirti. Allowing me to make promises and ensure we are able to deliver every time.", "by": "Consultant"}, {"id": "q02", "practice": "Incident Management", "quote": "Her effectiveness in communication and incident management processes makes her indispensable in these areas as well.", "by": "DevOps Team Lead"}, {"id": "q03", "practice": "Problem Management", "quote": "Additionally Kirti has helped to recognise when multiple of the same issue is popping up and ensures the people involved are put in touch with one another.", "by": "Consultant"}, {"id": "q04", "practice": "Ownership & Leadership", "quote": "During the TR4 project specifically, she was the only team member who proactively acknowledged the challenges and pushed the team into action.", "by": "Client team colleague"}, {"id": "q05", "practice": "Service Delivery", "quote": "Kirti has demonstrated that she is an excellent service delivery manager for the system team.", "by": "Programme Manager"}, {"id": "q06", "practice": "Continual Improvement", "quote": "She has also influenced myself and many others to be more diligent with tickets and reporting, so she has overall uplifted quality of output from a team level down to an individual level.", "by": "Consultant"}, {"id": "q07", "practice": "Service Request Management", "quote": "She excels at process governance; by acting as the central point of contact, she ensures that all incoming external requests follow proper project management channels and are accurately routed.", "by": "DevOps Engineer, my team"}, {"id": "q08", "practice": "Incident Management", "quote": "Tickets triage & Incident handling have improved a lot due to Kirti's effort.", "by": "Associate Consultant"}, {"id": "q09", "practice": "Relationship Management", "quote": "The clear interface with the team gives me clarity on what I can(‘t) expect and gives me a good opportunity to align, plan and know who to go to for a specific task.", "by": "Senior Consultant"}, {"id": "q10", "practice": "Ownership & Leadership", "quote": "Even when a request involves complex technical details, Kirti does not simply hand it over to the engineers and step away.", "by": "DevOps Engineer, my team"}], "career": [{"order": 1, "employer": "Eneve (formerly Energy21)", "period": "Jan 2024 – present", "role": "PMO Officer / Service Delivery Lead · Scrum Master, System team", "headline": "€3.4M", "headline_label": "Programme for a semi-state-owned gas market entity, delivered on time and under budget", "points": "Built the system team's sprint cadence from scratch · Ran P1 incident calls and owned the RCA process · Designed the Delivery Playbook, RASCI and templates used by every Eneve PM · Jira SME for the company"}, {"order": 2, "employer": "Basic-Fit", "period": "Fixed-term contract", "role": "", "headline": "DiliTrust", "headline_label": "SaaS implementation plan owned end to end", "points": "Personal-data migration, retention and access rules under GDPR · Onboarded the application to SailPoint Identity Security Cloud · Managed offshore delivery teams · Ran formal change-request approval"}, {"order": 3, "employer": "Athlon", "period": "Previous role", "role": "", "headline": "4", "headline_label": "Country teams aligned: Portugal, Spain, UK, Netherlands", "points": "Onboarded the application to SailPoint ISC and ran access certifications · Managed offshore teams · Ran post-go-live service reviews"}, {"order": 4, "employer": "Cevinio (B2B SaaS)", "period": "Previous role", "role": "", "headline": "102", "headline_label": "LeasePlan Netherlands customers onboarded, adding ARR", "points": "40% defect reduction through Datadog monitoring · Took sales-to-implementation handovers and joined scoping and SOW calls · Led product engineering teams through feature testing, rollout and incident resolution"}, {"order": 5, "employer": "Quizcraft", "period": "~4 years", "role": "", "headline": "~4 yrs", "headline_label": "Tenure", "points": "Details to be added"}], "tools": [{"tool": "Jira", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Confluence", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "ServiceNow", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Smartsheet", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Microsoft 365", "group": "Productivity & finance", "level": "Expert"}, {"tool": "AFAS", "group": "Productivity & finance", "level": "Expert"}, {"tool": "Microsoft Entra ID", "group": "Security & access", "level": "Delivered with"}, {"tool": "SailPoint Identity Security Cloud", "group": "Security & access", "level": "Delivered with"}, {"tool": "Microsoft Defender", "group": "Security & access", "level": "Delivered with"}, {"tool": "Azure WAF", "group": "Security & access", "level": "Delivered with"}, {"tool": "Aikido", "group": "Security & access", "level": "Delivered with"}, {"tool": "Holm Security", "group": "Security & access", "level": "Delivered with"}, {"tool": "Datadog", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "CData Arc (ArcESB)", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "DiliTrust", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "Microsoft Copilot", "group": "AI for reporting", "level": "Delivered with"}, {"tool": "Claude", "group": "AI for reporting", "level": "Delivered with"}], "rasci": [{"id": "r01", "area": "Project planning & oversight", "responsibility": "Project planning & scheduling", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r02", "area": "Project planning & oversight", "responsibility": "Delivery oversight & progress tracking", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r03", "area": "Project planning & oversight", "responsibility": "Reporting to senior leadership", "kirti": "R", "head_ops": "A", "tech_lead": "I", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r04", "area": "Project planning & oversight", "responsibility": "Day-to-day delivery decisions", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r05", "area": "Escalation & incident management", "responsibility": "First point of escalation — delivery & vendor issues", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r06", "area": "Escalation & incident management", "responsibility": "Incident triage & initial response", "kirti": "R+A", "head_ops": "I", "tech_lead": "S", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r07", "area": "Escalation & incident management", "responsibility": "Escalation to manager — strategic or high-risk issues", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r08", "area": "Escalation & incident management", "responsibility": "Stakeholder pressure management", "kirti": "R+A", "head_ops": "I", "tech_lead": "I", "stakeholder": "C", "vendor": "I", "held": "★"}, {"id": "r09", "area": "Stakeholder & vendor management", "responsibility": "Vendor relationship management", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "C", "held": "★"}, {"id": "r10", "area": "Stakeholder & vendor management", "responsibility": "Stakeholder & vendor meetings — representation", "kirti": "R", "head_ops": "I", "tech_lead": "S", "stakeholder": "A", "vendor": "C", "held": ""}, {"id": "r11", "area": "Stakeholder & vendor management", "responsibility": "Decisions in meetings without tech resource present", "kirti": "R+A", "head_ops": "I", "tech_lead": "I", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r12", "area": "Stakeholder & vendor management", "responsibility": "Client-facing communication on delivery status", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r13", "area": "Process & ways of working", "responsibility": "Ways of working design & improvement", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r14", "area": "Process & ways of working", "responsibility": "Technical decisions within delivery scope", "kirti": "I", "head_ops": "I", "tech_lead": "R+A", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r15", "area": "Process & ways of working", "responsibility": "Strategic direction & resourcing decisions", "kirti": "C", "head_ops": "A", "tech_lead": "R+A", "stakeholder": "I", "vendor": "I", "held": ""}], "credentials": [{"id": "psm1", "group": "Professional certifications", "name": "Professional Scrum Master™ I (PSM I)", "issuer": "Scrum.org", "issued": "Dec 2025", "verify": "https://www.scrum.org/certificates/1281742"}, {"id": "pspo1", "group": "Professional certifications", "name": "Professional Scrum Product Owner™ I (PSPO I)", "issuer": "Scrum.org", "issued": "Dec 2025", "verify": "https://www.scrum.org/certificates/1282089"}, {"id": "pgpm", "group": "Professional certifications", "name": "Post Graduate Program in Project Management", "issuer": "Isenberg School of Management, UMass Amherst with Simplilearn", "issued": "Mar 2023", "verify": "https://success.simplilearn.com/c4bea512-7ae9-41e2-821c-ccece8874b2a"}, {"id": "lssgb", "group": "Professional certifications", "name": "Lean Six Sigma Green Belt (LSSGB)", "issuer": "Simplilearn", "issued": "Sep 2022", "verify": "https://certificates.simplicdn.net/share/3741829_1662150015.pdf"}, {"id": "msc", "group": "Education", "name": "MSc Business Analytics", "issuer": "TIAS School for Business and Society", "issued": "", "verify": ""}, {"id": "itil", "group": "Knowledge areas", "name": "ITIL", "issuer": "", "issued": "", "verify": ""}, {"id": "itsm", "group": "Knowledge areas", "name": "IT service management (ITSM)", "issuer": "", "issued": "", "verify": ""}, {"id": "pg_asm", "group": "Project management programme modules", "name": "Agile Scrum Master", "issuer": "Simplilearn", "issued": "Aug 2022", "verify": ""}, {"id": "pg_pmo", "group": "Project management programme modules", "name": "Implementing a PMO", "issuer": "Simplilearn", "issued": "Jun 2022", "verify": ""}, {"id": "pg_rmp", "group": "Project management programme modules", "name": "PMI Risk Management Professional (course)", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "pg_msp", "group": "Project management programme modules", "name": "Microsoft® Project 2019", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "pg_cdt", "group": "Project management programme modules", "name": "Customer Centric Digital Transformation", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "g_fpm", "group": "Project, risk & quality courses", "name": "Foundations of Project Management", "issuer": "Google", "issued": "Sep 2021", "verify": "https://coursera.org/verify/GS5PZ2JHU496"}, {"id": "mb_risk", "group": "Project, risk & quality courses", "name": "Risk Management Basics", "issuer": "Mercedes-Benz AG", "issued": "Sep 2022", "verify": ""}, {"id": "li_6s", "group": "Project, risk & quality courses", "name": "Six Sigma Foundations", "issuer": "LinkedIn", "issued": "Feb 2020", "verify": ""}, {"id": "ph_cyber", "group": "Security & privacy courses", "name": "Cyber Resilience Certificate 2026", "issuer": "Phished", "issued": "2026 · valid until Jan 2028", "verify": ""}, {"id": "sl_cyber", "group": "Security & privacy courses", "name": "Introduction to Cyber Security", "issuer": "Simplilearn", "issued": "Dec 2021", "verify": ""}, {"id": "ibm_priv", "group": "Security & privacy courses", "name": "Data Privacy Fundamentals", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "ibm_ds", "group": "Data & analytics courses", "name": "Data Science Foundations – Level 1", "issuer": "IBM", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_ml", "group": "Data & analytics courses", "name": "Machine Learning with R – Level 1", "issuer": "IBM", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_ta", "group": "Data & analytics courses", "name": "Text Analytics 101", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "ibm_stat", "group": "Data & analytics courses", "name": "Statistics 101", "issuer": "IBM / Cognitive Class", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_bc", "group": "Data & analytics courses", "name": "IBM Blockchain Essentials V2", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "mq_xl", "group": "Data & analytics courses", "name": "Excel Skills for Business: Essentials", "issuer": "Macquarie University", "issued": "May 2021", "verify": ""}]};</script>
+<script>
+window.dash=(function(){
+  var D=window.__DATA__, calcs={}, subs=[];
+  function data(id){ if(id in D) return {status:'ok',data:D[id],columns:D[id].length?Object.keys(D[id][0]):[],refreshing:false,meta:[]};
+    if(id in calcs){ var c=calcs[id]; return {status:'ok',data:c.fn.apply(null,c.inputs.map(function(i){return data(i).data;})),refreshing:false,meta:[]}; }
+    return {status:'missing',data:[]}; }
+  function run(){ subs.forEach(function(f){ try{f();}catch(e){console.error(e);} }); }
+  var t; window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(run,150);});
+  return {data:data, calc:function(id,o){calcs[id]=o;}, onData:function(f){subs.push(f); if(document.readyState!=='loading') f(); else document.addEventListener('DOMContentLoaded',f);},
+    setLink:function(id){ try{history.replaceState(null,'','#'+id);}catch(e){} }, colors:['#38c6f4','#8b8ff0'], refresh:function(){}, params:function(){return {};}, setParams:function(){}, resetParams:function(){}};
+})();
+</script>
+<script>
+(function(){
+const enc = s => encodeURIComponent(String(s));
+const P0 = d3.format('.0%');
+const K = v => v >= 1000 ? (Math.round(v / 100) / 10) + 'k' : String(Math.round(v));
+const fmtHours = h => h >= 48 ? Math.round(h/24) + ' days' : (h < 1 ? Math.round(h*60) + ' min' : Math.round(h) + ' hrs');
+
+dash.calc('resp_display', {
+  title: 'First response, readable',
+  description: 'Median first-response hours from the Jira figures, rounded and written as hours or days.',
+  inputs: ['jira_kpis'],
+  fn: (jira_kpis) => jira_kpis
+    .filter(r => r.id === 'sys_before' || r.id === 'sys_after' || r.id === 'cli_after')
+    .map(r => { const h = Number(r.value); return {id: r.id, hours: h, shown: h >= 48 ? Math.round(h/24) + ' days' : (h < 1 ? Math.round(h*60) + ' min' : Math.round(h) + ' hrs')}; })
+});
+
+const kg = document.getElementById('kg');
+
+const rows = id => { const d = dash.data(id); return d.status === 'ok' ? d.data : null; };
+const el = (tag, cls, attrs) => { const e = document.createElement(tag); if (cls) e.className = cls; if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+const mark = (e, src, field, key, val) => { e.setAttribute('data-source', src); e.setAttribute('data-field', field); e.setAttribute('data-where', key + '=' + enc(val)); return e; };
+const txt = (e, t) => { e.textContent = t; return e; };
+const failed = (box) => { box.innerHTML = ''; const f = el('div', 'note'); f.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:6px;min-height:120px'; const dot = el('span'); dot.style.cssText = 'width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)'; f.append(dot, 'Failed to load'); box.append(f); };
+const guard = (id, box) => { const st = dash.data(id); box.innerHTML = ''; if (st.status === 'error') failed(box); return st.status === 'ok' ? st.data : null; };
+const get = (r, id) => r.find(x => x.id === id) || {};
+
+function fillStatic(){
+  document.querySelectorAll('.kg .hero [data-where]').forEach(n => {
+    const src = n.getAttribute('data-source'), f = n.getAttribute('data-field');
+    const [k, v] = n.getAttribute('data-where').split('=');
+    const r = rows(src);
+    if (!r) { n.textContent = '—'; return; }
+    const row = r.find(x => String(x[k]) === decodeURIComponent(v));
+    if (!row) { n.textContent = '—'; return; }
+    n.textContent = n.getAttribute('data-fmt') === 'pct' ? P0(row[f]) : String(row[f]);
+  });
+}
+
+/* One tile structure: label, big number, context line */
+function tile(label, bigParts, ctxParts){
+  const c = el('div', 'card stat');
+  c.append(txt(el('span', 'lbl'), label));
+  const b = el('span', 'big'); bigParts.forEach(p => b.append(p)); c.append(b);
+  const x = el('span', 'ctx'); ctxParts.forEach(p => x.append(p)); c.append(x);
+  return c;
+}
+const V = (src, id, text, cls) => { const s = mark(el('span', cls || ''), src, 'value', 'id', id); s.textContent = text; return s; };
+const arrow = () => txt(el('span', 'arr'), '→');
+
+function kpiTiles(){
+  const box = document.getElementById('kpiTiles'); const r = guard('jira_kpis', box); if (!r) return;
+  const resp = rows('resp_display') || [];
+  box.append(
+    tile('Tickets I worked on', [V('jira_kpis', 'tickets', K(get(r, 'tickets').value))], ['Commented, raised, assigned or watched']),
+    tile('Jira projects and client spaces', [V('jira_kpis', 'projects', String(get(r, 'projects').value))], ['Client, product and internal projects']),
+    tile('Tickets I commented on that were resolved', [V('jira_kpis', 'resolution', P0(get(r, 'resolution').value))], ['vs ', V('jira_kpis', 'watch_resolution', P0(get(r, 'watch_resolution').value)), ' of tickets I only watched']),
+    tile('Critical incidents resolved', [V('jira_kpis', 'critical_resolved', String(get(r, 'critical_resolved').value)), txt(el('span', 'of'), ' / '), V('jira_kpis', 'critical', String(get(r, 'critical').value), 'of')], [txt(el('span', 'good'), 'Every critical incident closed')]),
+    tile('Tickets answered within 24 hours', [V('jira_kpis', 'sys24_before', P0(get(r, 'sys24_before').value), 'was'), arrow(), V('jira_kpis', 'sys24_after', P0(get(r, 'sys24_after').value), 'good')], ['System team desk, Q2 2024 → Q4 2025'])
+  );
+}
+
+function trend(){
+  const box = document.getElementById('trend');
+  const raw = guard('first_response', box); if (!raw) return;
+  const data = raw.map(r => ({...r, q: new Date(r.qstart + 'T00:00:00Z'), v: Number(r.share_24h)}));
+  const desks = [...new Set(data.map(d => d.desk))];
+  const color = d => desks.indexOf(d) === 0 ? 'var(--primary)' : 'var(--cds-chart-muted)';
+  const W = Math.max(280, box.clientWidth), H = 240;
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Share of tickets answered within 24 hours by quarter');
+  const lastPts = desks.map(dk => data.filter(d => d.desk === dk).sort((a, b) => a.q - b.q).slice(-1)[0]);
+  const probe = svg.append('g').style('font-size', '12px');
+  const lw = d3.max(lastPts, p => { const t = probe.append('text').text(`${p.desk} ${P0(p.v)}`); const w = t.node().getComputedTextLength(); t.remove(); return w; }) || 0;
+  const narrow = W < 460;
+  const m = {t: 14, r: narrow ? 12 : lw + 14, b: narrow ? 46 : 28, l: 40};
+  const qs = [...new Set(data.map(d => +d.q))].sort((a, b) => a - b).map(t => new Date(t));
+  const x = d3.scaleUtc(d3.extent(qs), [m.l, W - m.r]);
+  const y = d3.scaleLinear([0, 1], [H - m.b, m.t]);
+  svg.append('g').selectAll('line').data([0, .5, 1]).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', d => y(d)).attr('y2', d => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+  svg.append('g').selectAll('text').data([0, .5, 1]).join('text').attr('x', m.l - 8).attr('y', d => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)').style('font-size', '12px').text(P0);
+  const every = W < 480 ? 3 : (W < 700 ? 2 : 1);
+  const qlab = d => `Q${Math.floor(d.getUTCMonth()/3)+1} ’${String(d.getUTCFullYear()).slice(2)}`;
+  svg.append('g').selectAll('text').data(qs.filter((d, i) => i % every === 0)).join('text').attr('x', d => x(d)).attr('y', H - m.b + 18).attr('text-anchor', 'middle').attr('fill', 'var(--color-fg-muted)').style('font-size', '12px').text(qlab);
+  const line = d3.line().x(d => x(d.q)).y(d => y(d.v));
+  [...desks].reverse().forEach(dk => {
+    const s = data.filter(d => d.desk === dk).sort((a, b) => a.q - b.q);
+    svg.append('path').datum(s).attr('fill', 'none').attr('stroke', color(dk)).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', line);
+  });
+  // Direct end labels instead of a legend; nudge apart if they collide
+  const labs = lastPts.map(p => ({p, y: y(p.v)})).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < labs.length; i++) if (labs[i].y - labs[i-1].y < 14) labs[i].y = labs[i-1].y + 14;
+  labs.forEach(({p, y: ly}) => {
+    svg.append('circle').attr('cx', x(p.q)).attr('cy', y(p.v)).attr('r', 3.5).attr('fill', color(p.desk));
+    if (narrow) return;
+    svg.append('text').attr('x', x(p.q) + 8).attr('y', ly).attr('dy', '0.32em').attr('fill', color(p.desk) === 'var(--primary)' ? 'var(--color-fg)' : 'var(--color-fg-muted)').style('font-size', '12px').text(`${p.desk} ${P0(p.v)}`);
+  });
+  if (narrow) desks.forEach((dk, i) => {
+    const g = svg.append('g').attr('transform', `translate(${m.l + i * ((W - m.l) / 2)},${H - 8})`);
+    g.append('circle').attr('r', 4).attr('cy', -4).attr('fill', color(dk));
+    g.append('text').attr('x', 8).attr('fill', 'var(--color-fg-muted)').style('font-size', '12px').text(dk);
+  });
+  const tip = el('div', 'tip'); box.append(tip);
+  const dot = svg.append('g');
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', Math.max(0, W - m.l - m.r)).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('mousemove', ev => {
+      const [mx] = d3.pointer(ev); const t = x.invert(mx);
+      const q = qs.reduce((a, b) => Math.abs(b - t) < Math.abs(a - t) ? b : a);
+      const pts = data.filter(d => +d.q === +q);
+      dot.selectAll('circle').data(pts).join('circle').attr('cx', d => x(d.q)).attr('cy', d => y(d.v)).attr('r', 4.5).attr('fill', d => color(d.desk)).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+      tip.innerHTML = ''; tip.append(txt(el('div', 't'), pts[0] ? pts[0].quarter : ''));
+      pts.forEach(p => { const r = el('div'); const sw = el('span', 'sw'); sw.style.background = color(p.desk); r.append(sw, `${p.desk}: ${P0(p.v)} within 24h · median ${fmtHours(Number(p.median_hours))}`); tip.append(r); });
+      tip.style.display = 'block';
+      const bw = box.clientWidth, px = x(q) / W * bw, tw = tip.offsetWidth;
+      tip.style.left = Math.max(0, Math.min(bw - tw, px + 12)) + 'px'; tip.style.top = '0px';
+    })
+    .on('mouseleave', () => { tip.style.display = 'none'; dot.selectAll('circle').remove(); });
+}
+
+function itsm(){
+  const box = document.getElementById('itsm'); const r = guard('itsm_mix', box); if (!r) return;
+  [...r].sort((a, b) => b.resolved / b.total - a.resolved / a.total).forEach(d => {
+    const rate = d.resolved / d.total;
+    const row = el('div', 'brow');
+    const top = el('div', 'top'); top.append(txt(el('b'), d.type), txt(el('span', 'num'), `${P0(rate)} · ${d3.format(',')(d.resolved)} of ${d3.format(',')(d.total)}`));
+    const t = el('div', 'btrack'); const res = el('div', 'bres'); res.style.width = (rate * 100) + '%';
+    t.append(res); row.append(top, t); box.append(row);
+  });
+}
+
+function delivery(){
+  const box = document.getElementById('deliveryTiles'); const r = guard('delivery_highlights', box); if (!r) return;
+  ['onboardings', 'clients', 'system_team', 'unbilled', 'recurring'].forEach(id => {
+    const row = get(r, id); if (!row.id) return;
+    const c = el('div', 'card stat');
+    c.append(mark(el('span', 'lbl'), 'delivery_highlights', 'label', 'id', id)); c.lastChild.textContent = row.label;
+    const b = mark(el('span', 'big' + (/^[↓↑]/.test(String(row.value)) ? ' good' : '')), 'delivery_highlights', 'value', 'id', id); b.textContent = row.value; c.append(b);
+    const n = mark(el('span', 'ctx'), 'delivery_highlights', 'note', 'id', id); n.textContent = row.note; c.append(n);
+    box.append(c);
+  });
+}
+
+function rasci(){
+  const box = document.getElementById('rasciTables'); const r = guard('rasci', box); if (!r) return;
+  const cols = [['responsibility', 'Responsibility'], ['held', '★'], ['kirti', 'Kirti'], ['head_ops', 'Head of Ops & DevOps'], ['tech_lead', 'Tech Lead'], ['stakeholder', 'Stakeholder'], ['vendor', 'Vendor']];
+  const cls = v => ({'R+A': 'b-ra', 'R': 'b-r', 'A': 'b-a', 'S': 'b-s', 'C': 'b-c', 'I': 'b-i'}[v] || 'b-i');
+  [...new Set(r.map(d => d.area))].forEach(a => {
+    const tb = el('table', 'rasci', {'data-source': 'rasci', 'data-row-key': 'id'});
+    tb.append(txt(el('caption'), a));
+    const thead = el('thead'); const hr = el('tr');
+    cols.forEach(([f, lab]) => hr.append(txt(el('th', f === 'kirti' ? 'me' : (f === 'held' ? 'star' : ''), {'data-field': f, scope: 'col'}), lab)));
+    thead.append(hr); tb.append(thead);
+    const tbody = el('tbody');
+    r.filter(d => d.area === a).forEach(d => {
+      const tr = el('tr', '', {'data-key': d.id});
+      cols.forEach(([f]) => {
+        const td = el('td', f === 'kirti' ? 'me' : (f === 'held' ? 'star' : ''));
+        if (f === 'responsibility' || f === 'held') td.textContent = d[f];
+        else td.append(txt(el('span', 'b ' + cls(d[f])), d[f]));
+        tr.append(td);
+      });
+      tbody.append(tr);
+    });
+    tb.append(tbody); box.append(tb);
+  });
+}
+
+function quotes(){
+  const box = document.getElementById('quotes'); const r = guard('colleague_quotes', box); if (!r) return;
+  const pc = {'Service Level Management': '--p-slm', 'Incident Management': '--p-inc', 'Problem Management': '--p-prb', 'Ownership & Leadership': '--p-own', 'Service Delivery': '--p-del', 'Continual Improvement': '--p-ci', 'Service Request Management': '--p-req', 'Relationship Management': '--p-rel'};
+  r.forEach(row => {
+    const c = el('figure', 'card q'); c.style.setProperty('--pc', `var(${pc[row.practice] || '--primary'})`);
+    const top = el('div', 'qtop');
+    top.append(txt(el('span', 'qm', {'aria-hidden': 'true'}), '“'), txt(mark(el('span', 'pill'), 'colleague_quotes', 'practice', 'id', row.id), row.practice));
+    const q = txt(mark(el('blockquote', 'quote'), 'colleague_quotes', 'quote', 'id', row.id), row.quote);
+    const by = txt(mark(el('figcaption', 'by'), 'colleague_quotes', 'by', 'id', row.id), row.by);
+    c.append(top, q, by); box.append(c);
+  });
+}
+
+function roles(){
+  const box = document.getElementById('roles'); const r = guard('career', box); if (!r) return;
+  [...r].sort((a, b) => a.order - b.order).forEach(row => {
+    const c = el('div', 'card job');
+    const left = el('div');
+    left.append(txt(mark(el('span', 'emp'), 'career', 'employer', 'order', row.order), row.employer), txt(mark(el('span', 'period'), 'career', 'period', 'order', row.order), row.period));
+    if (row.role) left.append(txt(mark(el('span', 'note'), 'career', 'role', 'order', row.order), row.role));
+    const hl = el('div', 'hl');
+    hl.append(txt(mark(el('span', 'big num'), 'career', 'headline', 'order', row.order), row.headline), txt(mark(el('span', 'note'), 'career', 'headline_label', 'order', row.order), row.headline_label));
+    c.append(left, hl);
+    if (row.points && row.points !== 'Details to be added') {
+      const ul = mark(el('ul', 'pts'), 'career', 'points', 'order', row.order);
+      String(row.points).split(' · ').forEach(t => ul.append(txt(el('li'), t)));
+      c.append(ul);
+    }
+    box.append(c);
+  });
+}
+
+function tools(){
+  const box = document.getElementById('toolGroups'); const r = guard('tools', box); if (!r) return;
+  [...new Set(r.map(d => d.group))].forEach(g => {
+    const c = el('div', 'card'); c.append(txt(el('p', 'cardh'), g));
+    const ch = el('div', 'chips');
+    r.filter(d => d.group === g).forEach(d => ch.append(txt(mark(el('span', 'chip' + (d.level === 'Expert' ? ' exp' : '')), 'tools', 'tool', 'tool', d.tool), d.tool)));
+    c.append(ch); box.append(c);
+  });
+}
+
+function creds(){
+  const box = document.getElementById('credGroups'); const r = guard('credentials', box); if (!r) return;
+  const groups = [...new Set(r.map(d => d.group))];
+  const major = ['Professional certifications', 'Education', 'Knowledge areas'];
+  // Tier 1: full cards with issuer, date and verify link
+  const top = el('div', 'grid two credtop');
+  groups.filter(g => major.includes(g)).forEach(g => {
+    const c = el('div', 'card cred' + (g === 'Professional certifications' ? ' lead' : '')); c.append(txt(el('p', 'cardh'), g));
+    r.filter(d => d.group === g).forEach(d => {
+      const it = el('div', 'credrow');
+      it.append(txt(mark(el('span', 'cn'), 'credentials', 'name', 'id', d.id), d.name));
+      const meta = el('span', 'note');
+      if (d.issuer) meta.append(txt(mark(el('span'), 'credentials', 'issuer', 'id', d.id), d.issuer));
+      if (d.issued) { if (d.issuer) meta.append(' · '); meta.append(txt(mark(el('span'), 'credentials', 'issued', 'id', d.id), d.issued)); }
+      if (meta.childNodes.length) it.append(meta);
+      if (d.verify && /^https:\/\//.test(d.verify)) { const a = el('a', 'verify', {href: d.verify, target: '_blank', rel: 'noopener noreferrer'}); a.textContent = 'Verify ↗'; it.append(a); }
+      c.append(it);
+    });
+    top.append(c);
+  });
+  box.append(top);
+  // Tier 2: compact chips per group
+  const rest = groups.filter(g => !major.includes(g));
+  if (rest.length) {
+    const g2 = el('div', 'grid two'); g2.style.marginTop = '16px';
+    rest.forEach(g => {
+      const c = el('div', 'card'); c.append(txt(el('p', 'cardh'), g));
+      const ch = el('div', 'chips');
+      r.filter(d => d.group === g).forEach(d => { const s = mark(el('span', 'chip'), 'credentials', 'name', 'id', d.id); s.textContent = d.name; s.title = [d.issuer, d.issued].filter(Boolean).join(' · '); ch.append(s); });
+      c.append(ch); g2.append(c);
+    });
+    box.append(g2);
+  }
+}
+
+document.querySelectorAll('.kg nav a[data-go]').forEach(a => a.addEventListener('click', ev => { ev.preventDefault(); const t = document.getElementById(a.getAttribute('data-go')); if (t) { t.scrollIntoView({behavior: 'smooth'}); dash.setLink(t.id); } }));
+
+let linked = false;
+dash.onData(() => {
+  fillStatic(); kpiTiles(); trend(); itsm(); delivery(); rasci(); quotes(); roles(); tools(); creds();
+  if (!linked && location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) { t.scrollIntoView(); linked = true; } }
+});
+})();
+
+</script>
+</body>
+</html>
