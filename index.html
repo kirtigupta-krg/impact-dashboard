@@ -7,6 +7,13 @@
 <meta name="description" content="Service delivery, PMO and Scrum impact portfolio of Kirti Gupta: Jira service metrics, programme delivery, responsibilities, colleague feedback, career and certifications.">
 <meta property="og:title" content="Kirti Gupta — Impact Dashboard">
 <meta property="og:description" content="Service Delivery Lead · PMO · Scrum Master — measured impact, colleague feedback and credentials.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kirtigupta-krg.github.io/impact-dashboard/">
+<meta property="og:image" content="https://kirtigupta-krg.github.io/impact-dashboard/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kirtigupta-krg.github.io/impact-dashboard/preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -38,7 +45,25 @@ body{-webkit-font-smoothing:antialiased}
   font-family:var(--font-anthropic-sans);font-size:15px;line-height:1.5;
   padding:clamp(16px,3.5vw,36px);border-radius:20px;
 }
-.kg>*{max-width:1120px;margin-inline:auto}
+.kg{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(20px,3vw,40px);max-width:1360px;margin-inline:auto}
+.kg .main{min-width:0;max-width:1120px}
+
+/* Side navigation: sticky on wide screens, top pill bar on narrow ones */
+.kg .side{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto}
+.kg .mono{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--peri));color:var(--bg);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;letter-spacing:.02em;margin-bottom:22px}
+.kg #sidenav{display:flex;flex-direction:column;gap:2px;margin:0;position:relative;border-left:2px solid var(--line)}
+.kg #sidenav a{position:relative;display:block;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;padding:8px 12px 8px 16px;margin-left:-2px;border-left:2px solid transparent;background:none;border-radius:0 8px 8px 0;transition:color .15s,background .15s,border-color .15s}
+.kg #sidenav a:hover{color:var(--text);background:var(--card)}
+.kg #sidenav a.on{color:var(--text);font-weight:600;border-left-color:var(--cyan);background:var(--cyan-soft)}
+@media (max-width:980px){
+  .kg{grid-template-columns:minmax(0,1fr)}
+  .kg .side{position:sticky;top:0;z-index:5;background:var(--bg);margin:-4px -4px 8px;padding:8px 4px;max-height:none;overflow:visible}
+  .kg .mono{display:none}
+  .kg #sidenav{flex-direction:row;gap:6px;border-left:0;overflow-x:auto;scrollbar-width:none}
+  .kg #sidenav::-webkit-scrollbar{display:none}
+  .kg #sidenav a{white-space:nowrap;border-left:0;margin-left:0;border-radius:999px;padding:6px 14px;background:var(--card);font-size:13px}
+  .kg #sidenav a.on{background:var(--cyan);color:var(--bg)}
+}
 .kg *{box-sizing:border-box}
 .kg .num{font-variant-numeric:tabular-nums}
 
@@ -54,19 +79,18 @@ body{-webkit-font-smoothing:antialiased}
 .kg .hero h1{font-size:clamp(2rem,4.6vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0}
 .kg .hero .sub{margin:8px 0 0;color:var(--muted);font-weight:500}
 .kg .hero .take{margin:14px 0 0;max-width:64ch;color:var(--text);opacity:.9}
-.kg .glance{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:16px;margin-top:26px}
+.kg .glance{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px;margin-top:26px}
 @media (max-width:760px){.kg .glance{grid-template-columns:1fr}}
 .kg .gl{background:var(--card);border-radius:var(--r);padding:24px}
 .kg .gl .k{display:none}
-.kg .gl .v{display:block;font-size:clamp(2.4rem,4.6vw,3.2rem);color:var(--text);min-height:1em}
-.kg .gl:first-child .v{font-size:clamp(2.6rem,5.4vw,3.8rem)}
+.kg .gl .v{display:block;font-size:clamp(1.9rem,3.3vw,2.7rem);color:var(--text);min-height:1em;white-space:nowrap}
+.kg .gl.lead{background:linear-gradient(150deg,rgba(56,198,244,.16),var(--card) 60%)}
+.kg .gl.lead .v{font-size:clamp(2.3rem,4.4vw,3.5rem)}
+.kg .gl .v .hi{color:var(--cyan)}
 .kg .gl .v .was{color:var(--faint);font-size:.55em;font-weight:600}
 .kg .gl .v .arr{font-size:.45em;color:var(--faint);margin:0 .3em;vertical-align:middle;font-weight:400}
 .kg .gl .lab{display:block;margin-top:12px;font-size:16px;font-weight:500;color:var(--text)}
 .kg .gl .c{display:inline-block;margin-top:12px;font-size:12px;font-weight:600;color:var(--cyan);background:var(--cyan-soft);border-radius:999px;padding:3px 10px}
-.kg nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
-.kg nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;background:var(--card);border-radius:999px;padding:5px 14px}
-.kg nav a:hover{color:var(--text);background:var(--card-2)}
 
 /* Sections & cards */
 .kg section{margin-top:clamp(40px,5.5vw,56px);scroll-margin-top:16px}
@@ -163,104 +187,240 @@ body{-webkit-font-smoothing:antialiased}
 [data-dash-source-state=empty]{color:transparent}
 [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
 
+/* Speed section */
+.kg .chartrow{margin-top:16px}
+.kg .speed .big .hi{color:var(--cyan)}
+.kg .pairs{display:grid;gap:16px;margin-top:20px;min-height:220px}
+.kg .pair .nm{font-size:14px;font-weight:500;margin-bottom:8px}
+.kg .pair .ln{display:grid;grid-template-columns:4.6rem 1fr 3rem;gap:10px;align-items:center;font-size:12px;color:var(--muted);margin-top:5px}
+.kg .pair .tr{height:10px;background:#232c52;border-radius:999px;overflow:hidden}
+.kg .pair .fl{height:100%;border-radius:999px}
+.kg .pair .pv{text-align:right;font-variant-numeric:tabular-nums;color:var(--text);font-weight:600}
+.kg .pair .ln.before .fl{background:var(--peri)}
+.kg .pair .ln.after .fl{background:var(--cyan)}
+.kg .pkey{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:14px}
+.kg .pkey i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+
+.kg .stat.wide{grid-column:span 2}
+@media (max-width:560px){.kg .stat.wide{grid-column:auto}}
+.kg #deliveryTiles{grid-template-columns:repeat(auto-fill,minmax(min(100%,14rem),1fr))}
+
+/* Filter */
+.kg .filterbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-6px 0 18px}
+.kg .flabel{font-size:13px;color:var(--muted);font-weight:500}
+.kg .seg{display:inline-flex;background:var(--card);border-radius:999px;padding:4px;gap:4px}
+.kg .seg button{font:inherit;font-size:13px;font-weight:600;color:var(--muted);background:none;border:0;border-radius:999px;padding:7px 16px;cursor:pointer}
+.kg .seg button:hover{color:var(--text)}
+.kg .seg button[aria-pressed="true"]{background:var(--cyan);color:var(--bg)}
+.kg .seg button:focus-visible,.kg .qt th button:focus-visible,.kg #sidenav a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+/* Change badges */
+.kg .delta{display:inline-block;align-self:flex-start;order:3;margin-top:10px;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;color:var(--cyan);background:var(--cyan-soft)}
+.kg .delta.bad{color:var(--alert);background:rgba(240,108,123,.14)}
+.kg .stat .ctx{order:4}
+
+/* Sortable table */
+.kg .twrap{overflow-x:auto;margin-top:14px}
+.kg table.qt{width:100%;border-collapse:collapse;font-size:14px;min-width:620px;font-variant-numeric:tabular-nums}
+.kg .qt th{text-align:right;padding:0;border-bottom:1px solid var(--line)}
+.kg .qt th:first-child,.kg .qt td:first-child{text-align:left}
+.kg .qt th button{font:inherit;font-size:12px;font-weight:600;color:var(--faint);background:none;border:0;padding:8px 10px;cursor:pointer;width:100%;text-align:inherit;white-space:nowrap}
+.kg .qt th button:hover{color:var(--text)}
+.kg .qt th[aria-sort] button{color:var(--cyan)}
+.kg .qt th[aria-sort="ascending"] button::after{content:" ▲";font-size:9px}
+.kg .qt th[aria-sort="descending"] button::after{content:" ▼";font-size:9px}
+.kg .qt td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;color:var(--text)}
+.kg .qt tbody tr:last-child td{border-bottom:0}
+.kg .qt tbody tr:hover td{background:var(--card-2)}
+.kg .qt td.best{color:var(--cyan);font-weight:600}
+
+/* Print */
+@media print{
+  .kg{display:block;background:#fff;color:#111;padding:0;border-radius:0;--text:#111;--muted:#555;--faint:#777;--card:#fff;--card-2:#f3f4f8;--line:#d9dce6;--bg:#fff;--cyan:#0b7fae;--cyan-soft:#e3f3fa;--peri:#6b6fd6;--color-panel:#fff;--color-fg:#111;--color-fg-muted:#555;--cds-chart-grid:#e3e5ec;--cds-chart-axis:#c9ccd8}
+  .kg .side,.kg .filterbar{display:none}
+  .kg .card,.kg .gl{border:1px solid #d9dce6;break-inside:avoid}
+  .kg section{break-before:auto;margin-top:28px}
+}
+/* Speed tiles: response row of three, resolution row of two */
+.kg #speedTiles{grid-template-columns:repeat(6,minmax(0,1fr))}
+.kg #speedTiles .speed{grid-column:span 2}
+.kg #speedTiles .speed:nth-child(n+4){grid-column:span 3}
+.kg #speedTiles .speed .big{white-space:nowrap;font-size:clamp(1.8rem,3vw,2.4rem)}
+@media (max-width:900px){.kg #speedTiles{grid-template-columns:repeat(2,minmax(0,1fr))}.kg #speedTiles .speed,.kg #speedTiles .speed:nth-child(n+4){grid-column:auto}}
+@media (max-width:520px){.kg #speedTiles{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:980px){.kg section,.kg .hero{scroll-margin-top:64px}}
+
+/* Scale row under the headline figures */
+.kg .scalelabel{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:22px 0 10px}
+.kg .grid.scale{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kg .grid.scale .stat{padding:18px 20px}
+.kg .grid.scale .stat .big{font-size:clamp(1.6rem,2.6vw,2rem)}
+.kg .grid.scale .stat .lbl{font-size:14px;margin-top:8px}
+.kg .grid.scale .stat .ctx{font-size:12px;margin-top:6px}
+@media (max-width:900px){.kg .grid.scale{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Career mini-metrics */
+.kg .job .jstats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.kg .job .js{background:var(--card-2);border-radius:12px;padding:12px 14px}
+.kg .job .jv{display:block;font-size:1.35rem;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--text)}
+.kg .job .jv.hi{color:var(--cyan)}
+.kg .job .jl{display:block;margin-top:4px;font-size:12px;line-height:1.35;color:var(--muted)}
+@media (max-width:760px){.kg .job .jstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Number-led result bullets */
+.kg .job .pts{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+.kg .job .pts li{display:flex;align-items:baseline;gap:10px;font-size:13px;line-height:1.4;color:var(--muted);opacity:1}
+.kg .job .pts li::marker{content:none}
+.kg .job .pts .pn{flex:none;min-width:4.2rem;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--text);font-variant-numeric:tabular-nums}
+.kg .job .pts .pn.hi{color:var(--cyan)}
+@media (max-width:760px){.kg .job .pts{grid-template-columns:minmax(0,1fr)}}
+
 </style>
 </head>
 <body>
 <div id="dash-root">
 
 <div class="kg" id="kg">
-  <header class="hero" id="top">
-    <p class="kicker">IMPACT PORTFOLIO</p>
-    <h1>Kirti Gupta</h1>
-    <p class="sub">Service Delivery Lead · PMO · Scrum Master — Utrecht, Netherlands</p>
-    <p class="take">I built the service delivery function for Eneve's system team: structured triage, incident management and sprint planning that made the desk faster and more predictable for every client team.</p>
-    <div class="glance">
-      <div class="gl">
-        <span class="v figure"><span class="was" data-source="resp_display" data-field="shown" data-where="id=sys_before">—</span><span class="arr">→</span><span data-source="resp_display" data-field="shown" data-where="id=sys_after">—</span></span>
-        <span class="lab">Median first response, system team desk</span>
-        <span class="c">Q2 2024 → Q4 2025</span>
-      </div>
-      <div class="gl">
-        <span class="v figure" data-source="jira_kpis" data-field="value" data-where="id=resolution" data-fmt="pct">—</span>
-        <span class="lab">Tickets I worked on that were resolved</span>
-        <span class="c" data-source="jira_kpis" data-field="note" data-where="id=resolution">—</span>
-      </div>
-      <div class="gl">
-        <span class="v figure" data-source="delivery_highlights" data-field="value" data-where="id=prog_budget">—</span>
-        <span class="lab">Programme for a semi-state-owned gas market entity</span>
-        <span class="c">On time and under budget</span>
-      </div>
-    </div>
-    <nav aria-label="Sections"><a href="#impact" data-go="impact">Service impact</a><a href="#delivery" data-go="delivery">Delivery</a><a href="#rasci" data-go="rasci">How I operate</a><a href="#feedback" data-go="feedback">Colleague feedback</a><a href="#background" data-go="background">Career and skills</a></nav>
-  </header>
+  <aside class="side" aria-label="Sections">
+    <div class="mono">KG</div>
+    <nav id="sidenav">
+      <a href="#top" data-go="top" class="on">Overview</a>
+      <a href="#speed" data-go="speed">Response &amp; resolution</a>
+      <a href="#delivery" data-go="delivery">Programme delivery</a>
+      <a href="#career" data-go="career">Career</a>
+      <a href="#feedback" data-go="feedback">Colleague feedback</a>
+      <a href="#rasci" data-go="rasci">How I operate</a>
+      <a href="#skills" data-go="skills">Skills &amp; certifications</a>
+    </nav>
+  </aside>
 
-  <section id="impact">
-    <p class="kicker">SERVICE IMPACT · ENEVE</p>
-    <h2>Service impact at Eneve</h2>
-    <p class="lede">Tickets I commented on, raised, was assigned or watched in Jira, January 2024 – March 2026.</p>
-    <div class="grid" id="kpiTiles"></div>
-    <div class="grid two" style="margin-top:var(--cds-gap-md)">
-      <div class="card" id="trendCard">
-        <p class="cardh">Tickets answered within 24 hours</p>
-        <span class="note">By quarter · quarters with at least 10 tickets</span>
-        <div class="chart" id="trend" data-source="first_response"></div>
+  <main class="main">
+    <header class="hero" id="top">
+      <p class="kicker">IMPACT PORTFOLIO</p>
+      <h1>Kirti Gupta</h1>
+      <p class="sub">Service Delivery Lead · PMO · Scrum Master — Utrecht, Netherlands</p>
+      <p class="take">I built the service delivery function for Eneve's system team: structured triage, incident management and sprint planning that made the desk faster to respond and faster to resolve.</p>
+      <div class="glance">
+        <div class="gl lead">
+          <span class="v figure"><span class="was" data-source="resp_display" data-field="shown" data-where="id=sys_before">—</span><span class="arr">→</span><span class="hi" data-source="resp_display" data-field="shown" data-where="id=sys_after">—</span></span>
+          <span class="lab">Median first response</span>
+          <span class="c">System team desk · Q2 2024 → Q4 2025</span>
+        </div>
+        <div class="gl">
+          <span class="v figure"><span class="was" data-source="res_display" data-field="shown" data-where="id=res_med_before">—</span><span class="arr">→</span><span class="hi" data-source="res_display" data-field="shown" data-where="id=res_med_after">—</span></span>
+          <span class="lab">Median resolution time</span>
+          <span class="c">System team desk · Q2 2024 → Q4 2025</span>
+        </div>
+        <div class="gl">
+          <span class="v figure"><span class="was" data-source="jira_kpis" data-field="value" data-where="id=res30_before" data-fmt="pct">—</span><span class="arr">→</span><span class="hi" data-source="jira_kpis" data-field="value" data-where="id=res30_after" data-fmt="pct">—</span></span>
+          <span class="lab">Resolved within 30 days</span>
+          <span class="c">System team desk · Q2 2024 → Q4 2025</span>
+        </div>
       </div>
-      <div class="card" id="itsmCard">
+      <p class="scalelabel">Scale of the work · Jan 2024 – Mar 2026</p>
+      <div class="grid scale" id="kpiTiles"></div>
+    </header>
+
+    <section id="speed">
+      <p class="kicker">SERVICE DESK · ENEVE</p>
+      <h2>Response and resolution</h2>
+      <p class="lede">How fast tickets got a first reply and got resolved, from my own Jira exports, January 2024 – March 2026. Before/after compares tickets opened in Q2 2024 with Q4 2025.</p>
+      <div class="filterbar">
+        <span class="flabel" id="deskLabel">Service desk</span>
+        <div class="seg" id="deskSeg" role="group" aria-labelledby="deskLabel">
+          <button type="button" data-desk="System team desk">System team desk</button>
+          <button type="button" data-desk="Client service desk">Client service desk</button>
+        </div>
+      </div>
+      <div class="grid" id="speedTiles" data-source="desk_compare"></div>
+
+      <div class="grid two chartrow">
+        <div class="card" id="respBarsCard">
+          <p class="cardh">Median time to first response</p>
+          <span class="note"><span class="deskName">System team desk</span> · by quarter the ticket was opened</span>
+          <div class="chart" id="respBars" data-source="first_response"></div>
+        </div>
+        <div class="card" id="wait7Card">
+          <p class="cardh">Tickets that waited over 7 days for a first reply</p>
+          <span class="note"><span class="deskName">System team desk</span> · share of tickets, by quarter the ticket was opened</span>
+          <div class="chart" id="wait7" data-source="wait7_by_quarter"></div>
+        </div>
+      </div>
+      <div class="grid two chartrow">
+        <div class="card" id="trendCard">
+          <p class="cardh">Answered within 24 hours</p>
+          <span class="note">Both service desks I coordinate · by quarter the ticket was opened</span>
+          <div class="chart" id="trend" data-source="first_response"></div>
+        </div>
+        <div class="card" id="res30Card">
+          <p class="cardh">Resolved within 30 days</p>
+          <span class="note">Both service desks · by quarter the ticket was opened</span>
+          <div class="chart" id="res30" data-source="resolution_by_quarter"></div>
+        </div>
+      </div>
+
+      <div class="card" id="itsmCard" style="margin-top:16px">
         <p class="cardh">Resolved, by ticket type</p>
         <span class="note">Tickets I commented on</span>
         <div class="bars" id="itsm" data-source="itsm_mix"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="delivery">
-    <p class="kicker">PROGRAMME DELIVERY · ENEVE</p>
-    <h2>Programme and service delivery</h2>
-    <p class="lede">Client, team and finance outcomes at Eneve, beyond Jira.</p>
-    <div class="grid" id="deliveryTiles"></div>
-  </section>
+    <section id="delivery">
+      <p class="kicker">PROGRAMME DELIVERY · ENEVE</p>
+      <h2>Programme and service delivery</h2>
+      <p class="lede">Client, team and finance outcomes at Eneve, beyond Jira.</p>
+      <div class="grid" id="deliveryTiles"></div>
+    </section>
 
-  <section id="rasci">
-    <p class="kicker">RESPONSIBILITIES</p>
-    <h2>How I operate</h2>
-    <p class="lede">The RASCI I drafted for system team planning and delivery oversight. ★ marks what I carry day to day as Responsible and Accountable.</p>
-    <div class="rkey"><span><span class="b b-ra">R+A</span>Responsible + accountable</span><span><span class="b b-r">R</span>Responsible</span><span><span class="b b-a">A</span>Accountable</span><span><span class="b b-s">S</span>Supportive</span><span><span class="b b-c">C</span>Consulted</span><span><span class="b b-i">I</span>Informed</span></div>
-    <div class="rwrap" id="rasciTables" data-source="rasci"></div>
-  </section>
+    <section id="career">
+      <p class="kicker">TRACK RECORD</p>
+      <h2>Career</h2>
+      <p class="lede">Most recent first.</p>
+      <div class="jobs" id="roles"></div>
+    </section>
 
-  <section id="feedback">
-    <p class="fb-head">Peer &amp; Stakeholder Feedback — Direct Quotes</p>
-    <div class="qgrid" id="quotes"></div>
-  </section>
+    <section id="feedback">
+      <p class="fb-head">Peer &amp; Stakeholder Feedback — Direct Quotes</p>
+      <div class="qgrid" id="quotes"></div>
+    </section>
 
-  <section id="background">
-    <p class="kicker">BACKGROUND</p>
-    <h2>Career and skills</h2>
-    <h3>Career</h3>
-    <div class="jobs" id="roles"></div>
-    <h3>Tools and platforms</h3>
-    <div class="tkey"><span class="chip exp">Expert</span><span class="chip">Delivered with</span></div>
-    <div class="grid two" id="toolGroups"></div>
-    <h3>Certifications and knowledge areas</h3>
-    <div id="credGroups"></div>
-  </section>
+    <section id="rasci">
+      <p class="kicker">RESPONSIBILITIES</p>
+      <h2>How I operate</h2>
+      <p class="lede">The RASCI I drafted for system team planning and delivery oversight. ★ marks what I carry day to day as Responsible and Accountable.</p>
+      <div class="rkey"><span><span class="b b-ra">R+A</span>Responsible + accountable</span><span><span class="b b-r">R</span>Responsible</span><span><span class="b b-a">A</span>Accountable</span><span><span class="b b-s">S</span>Supportive</span><span><span class="b b-c">C</span>Consulted</span><span><span class="b b-i">I</span>Informed</span></div>
+      <div class="rwrap" id="rasciTables" data-source="rasci"></div>
+    </section>
 
-  <p class="method">Method: Jira figures come from my own exports. Resolution counts tickets with a Jira resolution set. First response excludes the requester and automation comments. Figures cover tickets I was involved in, not the whole organisation. No ticket content, client names or colleague names are published.</p>
+    <section id="skills">
+      <p class="kicker">EXPERTISE</p>
+      <h2>Skills and certifications</h2>
+      <h3>Tools and platforms</h3>
+      <div class="tkey"><span class="chip exp">Expert</span><span class="chip">Delivered with</span></div>
+      <div class="grid two" id="toolGroups"></div>
+      <h3>Certifications and knowledge areas</h3>
+      <div id="credGroups"></div>
+    </section>
+
+    <p class="method">Method: Jira figures come from my own exports. First response is the time until someone other than the requester replied, excluding automation. Resolution time runs from a ticket being opened to being resolved; tickets still open count as unresolved. Before/after compares tickets opened in Q2 2024 with tickets opened in Q4 2025; charts run from Q1 2024 to Q4 2025, leaving out Q1 2026 because the export ends mid-March. Figures cover tickets I was involved in, not the whole organisation. No ticket content, client names or colleague names are published.</p>
+  </main>
 </div>
 
 
 </div>
-<script>window.__DATA__={"jira_kpis": [{"id": "tickets", "value": 2680, "label": "Tickets I worked on", "note": "Commented, raised, assigned or watched, Jan 2024 – Mar 2026"}, {"id": "projects", "value": 41, "label": "Jira projects and client spaces", "note": "Distinct projects across the four exports"}, {"id": "comments", "value": 1490, "label": "Comments driving tickets forward", "note": "On 869 tickets"}, {"id": "resolution", "value": 0.824, "label": "Tickets I commented on that reached a resolution", "note": "1,174 of 1,425 tickets"}, {"id": "critical", "value": 34, "label": "Critical incidents, all resolved", "note": "34 of 34 resolved"}, {"id": "sys_before", "value": 335.1, "label": "System team desk, median first response, Q2 2024", "note": "36 tickets"}, {"id": "sys_after", "value": 1.8, "label": "System team desk, median first response, Q4 2025", "note": "102 tickets"}, {"id": "sys24_before", "value": 0.306, "label": "System team desk, replied within 24h, Q2 2024", "note": ""}, {"id": "sys24_after", "value": 0.745, "label": "System team desk, replied within 24h, Q4 2025", "note": ""}, {"id": "cli_after", "value": 2.0, "label": "Client service desk, median first response, Q4 2025", "note": "111 tickets"}, {"id": "cli24_after", "value": 0.748, "label": "Client service desk, replied within 24h, Q4 2025", "note": ""}, {"id": "watch_resolution", "value": 0.778, "label": "Tickets I watched that reached a resolution", "note": "1,653 of 2,124 tickets"}, {"id": "critical_resolved", "value": 34, "label": "Critical incidents resolved", "note": ""}], "first_response": [{"quarter": "2024 Q1", "qstart": "2024-01-01", "desk": "System team desk", "tickets": 10, "median_hours": 46.6, "share_24h": 0.5}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "System team desk", "tickets": 36, "median_hours": 335.1, "share_24h": 0.306}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "System team desk", "tickets": 146, "median_hours": 6.3, "share_24h": 0.61}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "System team desk", "tickets": 138, "median_hours": 36.4, "share_24h": 0.493}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "System team desk", "tickets": 56, "median_hours": 15.0, "share_24h": 0.536}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "System team desk", "tickets": 63, "median_hours": 21.1, "share_24h": 0.524}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "System team desk", "tickets": 105, "median_hours": 15.0, "share_24h": 0.61}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "System team desk", "tickets": 102, "median_hours": 1.8, "share_24h": 0.745}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "System team desk", "tickets": 53, "median_hours": 2.4, "share_24h": 0.566}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "Client service desk", "tickets": 16, "median_hours": 308.2, "share_24h": 0.25}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "Client service desk", "tickets": 29, "median_hours": 52.6, "share_24h": 0.448}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "Client service desk", "tickets": 27, "median_hours": 4.2, "share_24h": 0.556}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "Client service desk", "tickets": 66, "median_hours": 2.0, "share_24h": 0.667}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "Client service desk", "tickets": 101, "median_hours": 1.2, "share_24h": 0.723}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "Client service desk", "tickets": 95, "median_hours": 2.9, "share_24h": 0.705}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "Client service desk", "tickets": 111, "median_hours": 2.0, "share_24h": 0.748}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "Client service desk", "tickets": 101, "median_hours": 0.6, "share_24h": 0.822}], "itsm_mix": [{"type": "Incidents", "total": 282, "resolved": 234}, {"type": "Service requests", "total": 334, "resolved": 282}, {"type": "Changes", "total": 216, "resolved": 186}, {"type": "Problem records", "total": 48, "resolved": 35}], "delivery_highlights": [{"id": "prog_budget", "value": "€3.4M", "label": "Programme for a semi-state-owned entity in the gas market, owned end to end", "note": "Gas storage, reserve prediction and trading software; CFO-sponsored; delivered on time and under budget; now one of Eneve's biggest clients"}, {"id": "prog_team", "value": "17", "label": "People on the programme delivery team", "note": "Sole PMO; held vendors accountable for deliverables"}, {"id": "clients", "value": "23", "label": "Client environments supported", "note": "Including DR tests, pen tests and DORA evidence for several clients"}, {"id": "onboardings", "value": "4", "label": "New-client onboardings delivered", "note": "Environments, kick-offs, plans and go-live sign-off, 2025–2026"}, {"id": "system_team", "value": "~20", "label": "Engineers and vendors coordinated", "note": "Operations, DevSecOps, DBA and IT support in the system team"}, {"id": "unbilled", "value": "↓ 12%", "label": "Unbilled hours", "note": "Finance data, after Jira–AFAS time-tracking alignment"}, {"id": "recurring", "value": "↓ 25%", "label": "Recurring Jira issues", "note": "After problem-management and RCA process"}], "colleague_quotes": [{"id": "q01", "practice": "Service Level Management", "quote": "…the coordination and planning setup and managed by Kirti. Allowing me to make promises and ensure we are able to deliver every time.", "by": "Consultant"}, {"id": "q02", "practice": "Incident Management", "quote": "Her effectiveness in communication and incident management processes makes her indispensable in these areas as well.", "by": "DevOps Team Lead"}, {"id": "q03", "practice": "Problem Management", "quote": "Additionally Kirti has helped to recognise when multiple of the same issue is popping up and ensures the people involved are put in touch with one another.", "by": "Consultant"}, {"id": "q04", "practice": "Ownership & Leadership", "quote": "During the TR4 project specifically, she was the only team member who proactively acknowledged the challenges and pushed the team into action.", "by": "Client team colleague"}, {"id": "q05", "practice": "Service Delivery", "quote": "Kirti has demonstrated that she is an excellent service delivery manager for the system team.", "by": "Programme Manager"}, {"id": "q06", "practice": "Continual Improvement", "quote": "She has also influenced myself and many others to be more diligent with tickets and reporting, so she has overall uplifted quality of output from a team level down to an individual level.", "by": "Consultant"}, {"id": "q07", "practice": "Service Request Management", "quote": "She excels at process governance; by acting as the central point of contact, she ensures that all incoming external requests follow proper project management channels and are accurately routed.", "by": "DevOps Engineer, my team"}, {"id": "q08", "practice": "Incident Management", "quote": "Tickets triage & Incident handling have improved a lot due to Kirti's effort.", "by": "Associate Consultant"}, {"id": "q09", "practice": "Relationship Management", "quote": "The clear interface with the team gives me clarity on what I can(‘t) expect and gives me a good opportunity to align, plan and know who to go to for a specific task.", "by": "Senior Consultant"}, {"id": "q10", "practice": "Ownership & Leadership", "quote": "Even when a request involves complex technical details, Kirti does not simply hand it over to the engineers and step away.", "by": "DevOps Engineer, my team"}], "career": [{"order": 1, "employer": "Eneve (formerly Energy21)", "period": "Jan 2024 – present", "role": "PMO Officer / Service Delivery Lead · Scrum Master, System team", "headline": "€3.4M", "headline_label": "Programme for a semi-state-owned gas market entity, delivered on time and under budget", "points": "Built the system team's sprint cadence from scratch · Ran P1 incident calls and owned the RCA process · Designed the Delivery Playbook, RASCI and templates used by every Eneve PM · Jira SME for the company"}, {"order": 2, "employer": "Basic-Fit", "period": "Fixed-term contract", "role": "", "headline": "DiliTrust", "headline_label": "SaaS implementation plan owned end to end", "points": "Personal-data migration, retention and access rules under GDPR · Onboarded the application to SailPoint Identity Security Cloud · Managed offshore delivery teams · Ran formal change-request approval"}, {"order": 3, "employer": "Athlon", "period": "Previous role", "role": "", "headline": "4", "headline_label": "Country teams aligned: Portugal, Spain, UK, Netherlands", "points": "Onboarded the application to SailPoint ISC and ran access certifications · Managed offshore teams · Ran post-go-live service reviews"}, {"order": 4, "employer": "Cevinio (B2B SaaS)", "period": "Previous role", "role": "", "headline": "102", "headline_label": "LeasePlan Netherlands customers onboarded, adding ARR", "points": "40% defect reduction through Datadog monitoring · Took sales-to-implementation handovers and joined scoping and SOW calls · Led product engineering teams through feature testing, rollout and incident resolution"}, {"order": 5, "employer": "Quizcraft", "period": "~4 years", "role": "", "headline": "~4 yrs", "headline_label": "Tenure", "points": "Details to be added"}], "tools": [{"tool": "Jira", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Confluence", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "ServiceNow", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Smartsheet", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Microsoft 365", "group": "Productivity & finance", "level": "Expert"}, {"tool": "AFAS", "group": "Productivity & finance", "level": "Expert"}, {"tool": "Microsoft Entra ID", "group": "Security & access", "level": "Delivered with"}, {"tool": "SailPoint Identity Security Cloud", "group": "Security & access", "level": "Delivered with"}, {"tool": "Microsoft Defender", "group": "Security & access", "level": "Delivered with"}, {"tool": "Azure WAF", "group": "Security & access", "level": "Delivered with"}, {"tool": "Aikido", "group": "Security & access", "level": "Delivered with"}, {"tool": "Holm Security", "group": "Security & access", "level": "Delivered with"}, {"tool": "Datadog", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "CData Arc (ArcESB)", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "DiliTrust", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "Microsoft Copilot", "group": "AI for reporting", "level": "Delivered with"}, {"tool": "Claude", "group": "AI for reporting", "level": "Delivered with"}], "rasci": [{"id": "r01", "area": "Project planning & oversight", "responsibility": "Project planning & scheduling", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r02", "area": "Project planning & oversight", "responsibility": "Delivery oversight & progress tracking", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r03", "area": "Project planning & oversight", "responsibility": "Reporting to senior leadership", "kirti": "R", "head_ops": "A", "tech_lead": "I", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r04", "area": "Project planning & oversight", "responsibility": "Day-to-day delivery decisions", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r05", "area": "Escalation & incident management", "responsibility": "First point of escalation — delivery & vendor issues", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r06", "area": "Escalation & incident management", "responsibility": "Incident triage & initial response", "kirti": "R+A", "head_ops": "I", "tech_lead": "S", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r07", "area": "Escalation & incident management", "responsibility": "Escalation to manager — strategic or high-risk issues", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r08", "area": "Escalation & incident management", "responsibility": "Stakeholder pressure management", "kirti": "R+A", "head_ops": "I", "tech_lead": "I", "stakeholder": "C", "vendor": "I", "held": "★"}, {"id": "r09", "area": "Stakeholder & vendor management", "responsibility": "Vendor relationship management", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "C", "held": "★"}, {"id": "r10", "area": "Stakeholder & vendor management", "responsibility": "Stakeholder & vendor meetings — representation", "kirti": "R", "head_ops": "I", "tech_lead": "S", "stakeholder": "A", "vendor": "C", "held": ""}, {"id": "r11", "area": "Stakeholder & vendor management", "responsibility": "Decisions in meetings without tech resource present", "kirti": "R+A", "head_ops": "I", "tech_lead": "I", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r12", "area": "Stakeholder & vendor management", "responsibility": "Client-facing communication on delivery status", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r13", "area": "Process & ways of working", "responsibility": "Ways of working design & improvement", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r14", "area": "Process & ways of working", "responsibility": "Technical decisions within delivery scope", "kirti": "I", "head_ops": "I", "tech_lead": "R+A", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r15", "area": "Process & ways of working", "responsibility": "Strategic direction & resourcing decisions", "kirti": "C", "head_ops": "A", "tech_lead": "R+A", "stakeholder": "I", "vendor": "I", "held": ""}], "credentials": [{"id": "psm1", "group": "Professional certifications", "name": "Professional Scrum Master™ I (PSM I)", "issuer": "Scrum.org", "issued": "Dec 2025", "verify": "https://www.scrum.org/certificates/1281742"}, {"id": "pspo1", "group": "Professional certifications", "name": "Professional Scrum Product Owner™ I (PSPO I)", "issuer": "Scrum.org", "issued": "Dec 2025", "verify": "https://www.scrum.org/certificates/1282089"}, {"id": "pgpm", "group": "Professional certifications", "name": "Post Graduate Program in Project Management", "issuer": "Isenberg School of Management, UMass Amherst with Simplilearn", "issued": "Mar 2023", "verify": "https://success.simplilearn.com/c4bea512-7ae9-41e2-821c-ccece8874b2a"}, {"id": "lssgb", "group": "Professional certifications", "name": "Lean Six Sigma Green Belt (LSSGB)", "issuer": "Simplilearn", "issued": "Sep 2022", "verify": "https://certificates.simplicdn.net/share/3741829_1662150015.pdf"}, {"id": "msc", "group": "Education", "name": "MSc Business Analytics", "issuer": "TIAS School for Business and Society", "issued": "", "verify": ""}, {"id": "itil", "group": "Knowledge areas", "name": "ITIL", "issuer": "", "issued": "", "verify": ""}, {"id": "itsm", "group": "Knowledge areas", "name": "IT service management (ITSM)", "issuer": "", "issued": "", "verify": ""}, {"id": "pg_asm", "group": "Project management programme modules", "name": "Agile Scrum Master", "issuer": "Simplilearn", "issued": "Aug 2022", "verify": ""}, {"id": "pg_pmo", "group": "Project management programme modules", "name": "Implementing a PMO", "issuer": "Simplilearn", "issued": "Jun 2022", "verify": ""}, {"id": "pg_rmp", "group": "Project management programme modules", "name": "PMI Risk Management Professional (course)", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "pg_msp", "group": "Project management programme modules", "name": "Microsoft® Project 2019", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "pg_cdt", "group": "Project management programme modules", "name": "Customer Centric Digital Transformation", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "g_fpm", "group": "Project, risk & quality courses", "name": "Foundations of Project Management", "issuer": "Google", "issued": "Sep 2021", "verify": "https://coursera.org/verify/GS5PZ2JHU496"}, {"id": "mb_risk", "group": "Project, risk & quality courses", "name": "Risk Management Basics", "issuer": "Mercedes-Benz AG", "issued": "Sep 2022", "verify": ""}, {"id": "li_6s", "group": "Project, risk & quality courses", "name": "Six Sigma Foundations", "issuer": "LinkedIn", "issued": "Feb 2020", "verify": ""}, {"id": "ph_cyber", "group": "Security & privacy courses", "name": "Cyber Resilience Certificate 2026", "issuer": "Phished", "issued": "2026 · valid until Jan 2028", "verify": ""}, {"id": "sl_cyber", "group": "Security & privacy courses", "name": "Introduction to Cyber Security", "issuer": "Simplilearn", "issued": "Dec 2021", "verify": ""}, {"id": "ibm_priv", "group": "Security & privacy courses", "name": "Data Privacy Fundamentals", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "ibm_ds", "group": "Data & analytics courses", "name": "Data Science Foundations – Level 1", "issuer": "IBM", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_ml", "group": "Data & analytics courses", "name": "Machine Learning with R – Level 1", "issuer": "IBM", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_ta", "group": "Data & analytics courses", "name": "Text Analytics 101", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "ibm_stat", "group": "Data & analytics courses", "name": "Statistics 101", "issuer": "IBM / Cognitive Class", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_bc", "group": "Data & analytics courses", "name": "IBM Blockchain Essentials V2", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "mq_xl", "group": "Data & analytics courses", "name": "Excel Skills for Business: Essentials", "issuer": "Macquarie University", "issued": "May 2021", "verify": ""}]};</script>
+<script>window.__DATA__={"jira_kpis": [{"id": "tickets", "value": 2680, "label": "Tickets I worked on", "note": "Commented, raised, assigned or watched, Jan 2024 – Mar 2026"}, {"id": "projects", "value": 41, "label": "Jira projects and client spaces", "note": "Distinct projects across the four exports"}, {"id": "comments", "value": 1490, "label": "Comments driving tickets forward", "note": "On 869 tickets"}, {"id": "resolution", "value": 0.824, "label": "Tickets I commented on that reached a resolution", "note": "1,174 of 1,425 tickets"}, {"id": "critical", "value": 34, "label": "Critical incidents, all resolved", "note": "34 of 34 resolved"}, {"id": "sys_before", "value": 335.1, "label": "System team desk, median first response, Q2 2024", "note": "36 tickets"}, {"id": "sys_after", "value": 1.8, "label": "System team desk, median first response, Q4 2025", "note": "102 tickets"}, {"id": "sys24_before", "value": 0.306, "label": "System team desk, replied within 24h, Q2 2024", "note": ""}, {"id": "sys24_after", "value": 0.745, "label": "System team desk, replied within 24h, Q4 2025", "note": ""}, {"id": "cli_after", "value": 2.0, "label": "Client service desk, median first response, Q4 2025", "note": "111 tickets"}, {"id": "cli24_after", "value": 0.748, "label": "Client service desk, replied within 24h, Q4 2025", "note": ""}, {"id": "watch_resolution", "value": 0.778, "label": "Tickets I watched that reached a resolution", "note": "1,653 of 2,124 tickets"}, {"id": "critical_resolved", "value": 34, "label": "Critical incidents resolved", "note": ""}, {"id": "res_med_before", "value": 80.0, "label": "System team desk, median resolution time (days), tickets opened Q2 2024", "note": "37 tickets; unresolved tickets counted as still open"}, {"id": "res_med_after", "value": 28.1, "label": "System team desk, median resolution time (days), tickets opened Q4 2025", "note": "103 tickets"}, {"id": "res30_before", "value": 0.189, "label": "System team desk, resolved within 30 days, tickets opened Q2 2024", "note": ""}, {"id": "res30_after", "value": 0.524, "label": "System team desk, resolved within 30 days, tickets opened Q4 2025", "note": ""}, {"id": "wait7_before", "value": 0.611, "label": "System team desk, waited over 7 days for a first reply, Q2 2024", "note": ""}, {"id": "wait7_after", "value": 0.098, "label": "System team desk, waited over 7 days for a first reply, Q4 2025", "note": ""}], "first_response": [{"quarter": "2024 Q1", "qstart": "2024-01-01", "desk": "System team desk", "tickets": 10, "median_hours": 46.6, "share_24h": 0.5}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "System team desk", "tickets": 36, "median_hours": 335.1, "share_24h": 0.306}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "System team desk", "tickets": 146, "median_hours": 6.3, "share_24h": 0.61}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "System team desk", "tickets": 138, "median_hours": 36.4, "share_24h": 0.493}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "System team desk", "tickets": 56, "median_hours": 15.0, "share_24h": 0.536}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "System team desk", "tickets": 63, "median_hours": 21.1, "share_24h": 0.524}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "System team desk", "tickets": 105, "median_hours": 15.0, "share_24h": 0.61}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "System team desk", "tickets": 102, "median_hours": 1.8, "share_24h": 0.745}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "System team desk", "tickets": 53, "median_hours": 2.4, "share_24h": 0.566}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "Client service desk", "tickets": 16, "median_hours": 308.2, "share_24h": 0.25}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "Client service desk", "tickets": 29, "median_hours": 52.6, "share_24h": 0.448}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "Client service desk", "tickets": 27, "median_hours": 4.2, "share_24h": 0.556}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "Client service desk", "tickets": 66, "median_hours": 2.0, "share_24h": 0.667}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "Client service desk", "tickets": 101, "median_hours": 1.2, "share_24h": 0.723}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "Client service desk", "tickets": 95, "median_hours": 2.9, "share_24h": 0.705}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "Client service desk", "tickets": 111, "median_hours": 2.0, "share_24h": 0.748}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "Client service desk", "tickets": 101, "median_hours": 0.6, "share_24h": 0.822}], "resolution_by_quarter": [{"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "Client service desk", "tickets": 16, "share_7d": 0.0, "share_30d": 0.0, "median_days": 204.5}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "Client service desk", "tickets": 39, "share_7d": 0.205, "share_30d": 0.333, "median_days": 69.9}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "Client service desk", "tickets": 32, "share_7d": 0.156, "share_30d": 0.406, "median_days": 52.7}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "Client service desk", "tickets": 68, "share_7d": 0.265, "share_30d": 0.559, "median_days": 19.5}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "Client service desk", "tickets": 104, "share_7d": 0.24, "share_30d": 0.452, "median_days": 42.0}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "Client service desk", "tickets": 98, "share_7d": 0.224, "share_30d": 0.469, "median_days": 40.6}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "Client service desk", "tickets": 113, "share_7d": 0.186, "share_30d": 0.363, "median_days": 48.0}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "Client service desk", "tickets": 102, "share_7d": 0.373, "share_30d": 0.598, "median_days": 14.6}, {"quarter": "2024 Q1", "qstart": "2024-01-01", "desk": "System team desk", "tickets": 10, "share_7d": 0.1, "share_30d": 0.1, "median_days": 187.6}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "System team desk", "tickets": 37, "share_7d": 0.054, "share_30d": 0.189, "median_days": 80.0}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "System team desk", "tickets": 149, "share_7d": 0.356, "share_30d": 0.604, "median_days": 19.8}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "System team desk", "tickets": 139, "share_7d": 0.324, "share_30d": 0.554, "median_days": 19.8}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "System team desk", "tickets": 57, "share_7d": 0.281, "share_30d": 0.509, "median_days": 26.8}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "System team desk", "tickets": 63, "share_7d": 0.222, "share_30d": 0.413, "median_days": 44.4}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "System team desk", "tickets": 105, "share_7d": 0.267, "share_30d": 0.581, "median_days": 19.1}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "System team desk", "tickets": 103, "share_7d": 0.291, "share_30d": 0.524, "median_days": 28.1}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "System team desk", "tickets": 57, "share_7d": 0.333, "share_30d": 0.474, "median_days": 32.0}], "wait7_by_quarter": [{"quarter": "2024 Q1", "qstart": "2024-01-01", "desk": "System team desk", "tickets": 10, "share_over_7d": 0.4}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "System team desk", "tickets": 36, "share_over_7d": 0.611}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "System team desk", "tickets": 146, "share_over_7d": 0.205}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "System team desk", "tickets": 138, "share_over_7d": 0.406}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "System team desk", "tickets": 56, "share_over_7d": 0.214}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "System team desk", "tickets": 63, "share_over_7d": 0.206}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "System team desk", "tickets": 105, "share_over_7d": 0.257}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "System team desk", "tickets": 102, "share_over_7d": 0.098}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "System team desk", "tickets": 53, "share_over_7d": 0.075}, {"quarter": "2024 Q2", "qstart": "2024-04-01", "desk": "Client service desk", "tickets": 16, "share_over_7d": 0.562}, {"quarter": "2024 Q3", "qstart": "2024-07-01", "desk": "Client service desk", "tickets": 29, "share_over_7d": 0.379}, {"quarter": "2024 Q4", "qstart": "2024-10-01", "desk": "Client service desk", "tickets": 27, "share_over_7d": 0.259}, {"quarter": "2025 Q1", "qstart": "2025-01-01", "desk": "Client service desk", "tickets": 66, "share_over_7d": 0.121}, {"quarter": "2025 Q2", "qstart": "2025-04-01", "desk": "Client service desk", "tickets": 101, "share_over_7d": 0.149}, {"quarter": "2025 Q3", "qstart": "2025-07-01", "desk": "Client service desk", "tickets": 95, "share_over_7d": 0.095}, {"quarter": "2025 Q4", "qstart": "2025-10-01", "desk": "Client service desk", "tickets": 111, "share_over_7d": 0.117}, {"quarter": "2026 Q1", "qstart": "2026-01-01", "desk": "Client service desk", "tickets": 101, "share_over_7d": 0.099}], "desk_compare": [{"id": "sys_resp", "desk": "System team desk", "order": 1, "metric": "Median first response", "unit": "hours", "better": "lower", "before": 335.1, "after": 1.8, "tickets_before": 36, "tickets_after": 102}, {"id": "sys_24h", "desk": "System team desk", "order": 2, "metric": "Answered within 24 hours", "unit": "share", "better": "higher", "before": 0.306, "after": 0.745, "tickets_before": 36, "tickets_after": 102}, {"id": "sys_wait7", "desk": "System team desk", "order": 3, "metric": "Waited over 7 days for a first reply", "unit": "share", "better": "lower", "before": 0.611, "after": 0.098, "tickets_before": 36, "tickets_after": 102}, {"id": "sys_resmed", "desk": "System team desk", "order": 4, "metric": "Median resolution time", "unit": "days", "better": "lower", "before": 80.0, "after": 28.1, "tickets_before": 37, "tickets_after": 103}, {"id": "sys_res30", "desk": "System team desk", "order": 5, "metric": "Resolved within 30 days", "unit": "share", "better": "higher", "before": 0.189, "after": 0.524, "tickets_before": 37, "tickets_after": 103}, {"id": "cli_resp", "desk": "Client service desk", "order": 1, "metric": "Median first response", "unit": "hours", "better": "lower", "before": 308.2, "after": 2.0, "tickets_before": 16, "tickets_after": 111}, {"id": "cli_24h", "desk": "Client service desk", "order": 2, "metric": "Answered within 24 hours", "unit": "share", "better": "higher", "before": 0.25, "after": 0.748, "tickets_before": 16, "tickets_after": 111}, {"id": "cli_wait7", "desk": "Client service desk", "order": 3, "metric": "Waited over 7 days for a first reply", "unit": "share", "better": "lower", "before": 0.562, "after": 0.117, "tickets_before": 16, "tickets_after": 111}, {"id": "cli_resmed", "desk": "Client service desk", "order": 4, "metric": "Median resolution time", "unit": "days", "better": "lower", "before": 204.5, "after": 48.0, "tickets_before": 16, "tickets_after": 113}, {"id": "cli_res30", "desk": "Client service desk", "order": 5, "metric": "Resolved within 30 days", "unit": "share", "better": "higher", "before": 0.0, "after": 0.363, "tickets_before": 16, "tickets_after": 113}], "itsm_mix": [{"type": "Incidents", "total": 282, "resolved": 234}, {"type": "Service requests", "total": 334, "resolved": 282}, {"type": "Changes", "total": 216, "resolved": 186}, {"type": "Problem records", "total": 48, "resolved": 35}], "delivery_highlights": [{"id": "prog_budget", "value": "€3.4M", "label": "Programme for a semi-state-owned entity in the gas market, owned end to end", "note": "Gas storage, reserve prediction and trading software; CFO-sponsored; delivered on time and under budget; now one of Eneve's biggest clients"}, {"id": "prog_team", "value": "17", "label": "People on the programme delivery team", "note": "Sole PMO; held vendors accountable for deliverables"}, {"id": "clients", "value": "23", "label": "Client environments supported", "note": "Including DR tests, pen tests and DORA evidence for several clients"}, {"id": "onboardings", "value": "4", "label": "New-client onboardings delivered", "note": "Environments, kick-offs, plans and go-live sign-off, 2025–2026"}, {"id": "system_team", "value": "~20", "label": "Engineers and vendors coordinated", "note": "Operations, DevSecOps, DBA and IT support in the system team"}, {"id": "unbilled", "value": "↓ 12%", "label": "Unbilled hours", "note": "Finance data, after Jira–AFAS time-tracking alignment"}, {"id": "recurring", "value": "↓ 25%", "label": "Recurring Jira issues", "note": "After problem-management and RCA process"}], "colleague_quotes": [{"id": "q01", "practice": "Service Level Management", "quote": "…the coordination and planning setup and managed by Kirti. Allowing me to make promises and ensure we are able to deliver every time.", "by": "Consultant"}, {"id": "q02", "practice": "Incident Management", "quote": "Her effectiveness in communication and incident management processes makes her indispensable in these areas as well.", "by": "DevOps Team Lead"}, {"id": "q03", "practice": "Problem Management", "quote": "Additionally Kirti has helped to recognise when multiple of the same issue is popping up and ensures the people involved are put in touch with one another.", "by": "Consultant"}, {"id": "q04", "practice": "Ownership & Leadership", "quote": "During the TR4 project specifically, she was the only team member who proactively acknowledged the challenges and pushed the team into action.", "by": "Client team colleague"}, {"id": "q05", "practice": "Service Delivery", "quote": "Kirti has demonstrated that she is an excellent service delivery manager for the system team.", "by": "Programme Manager"}, {"id": "q06", "practice": "Continual Improvement", "quote": "She has also influenced myself and many others to be more diligent with tickets and reporting, so she has overall uplifted quality of output from a team level down to an individual level.", "by": "Consultant"}, {"id": "q07", "practice": "Service Request Management", "quote": "She excels at process governance; by acting as the central point of contact, she ensures that all incoming external requests follow proper project management channels and are accurately routed.", "by": "DevOps Engineer, my team"}, {"id": "q08", "practice": "Incident Management", "quote": "Tickets triage & Incident handling have improved a lot due to Kirti's effort.", "by": "Associate Consultant"}, {"id": "q09", "practice": "Relationship Management", "quote": "The clear interface with the team gives me clarity on what I can(‘t) expect and gives me a good opportunity to align, plan and know who to go to for a specific task.", "by": "Senior Consultant"}, {"id": "q10", "practice": "Ownership & Leadership", "quote": "Even when a request involves complex technical details, Kirti does not simply hand it over to the engineers and step away.", "by": "DevOps Engineer, my team"}], "career": [{"order": 1, "employer": "Eneve (formerly Energy21)", "period": "Jan 2024 – present", "role": "PMO Officer / Service Delivery Lead · Scrum Master, System team", "headline": "€3.4M", "headline_label": "Programme for a semi-state-owned gas market entity, delivered on time and under budget", "points": "23|client environments supported · 4|new-client onboardings delivered · ~20|engineers and vendors coordinated · 24 hrs|ticket turnaround, down from 3 days–2 weeks · 100%|of Eneve PMs use my delivery templates · P1|incident calls and RCA process owned"}, {"order": 2, "employer": "Basic-Fit", "period": "Fixed-term contract", "role": "", "headline": "DiliTrust", "headline_label": "SaaS implementation plan owned end to end", "points": "GDPR|personal-data migration and retention · SailPoint ISC|application onboarding · Offshore|delivery teams managed · Change|requests run through formal approval"}, {"order": 3, "employer": "Athlon", "period": "Previous role", "role": "", "headline": "4", "headline_label": "Country teams aligned: Portugal, Spain, UK, Netherlands", "points": "SailPoint ISC|onboarding and access certifications · Offshore|delivery teams managed · Post-go-live|service reviews run"}, {"order": 4, "employer": "Cevinio (B2B SaaS)", "period": "Previous role", "role": "Implementation Project Manager, SaaS ERP", "headline": "500k", "headline_label": "Invoices automated across 5 SaaS ERP implementations", "points": "4|implementations run in parallel · 3|projects delivered ahead of deadline · 5+|levels of testing, functional to performance · 1,000+|invoices read in one file (XSLT mapping) · 20×|fewer errors for product owners and developers, up to · ↓ 30%|shorter SDLC via implementation guides · 20+|people trained in 6+ countries · 60% → 75%|customer survey submissions · 4 EDI|platforms: Tungsten, SAP Ariba, Coupa, PEPPOL · SAP S/4|financial integration led", "stats": [{"value": "↓ 85%", "label": "Cost per invoice (€0.75 → €0.11), client in France"}, {"value": "↑ 50%", "label": "Order-to-Cash efficiency, up to"}, {"value": "↓ 40%", "label": "Post-production defects, via application monitoring"}, {"value": "102", "label": "Buyers onboarded to 4 EDI platforms"}]}, {"order": 5, "employer": "Quizcraft", "period": "~4 years", "role": "Assistant Project Manager, Namaste Thailand programme", "headline": "192", "headline_label": "Countries reached by the LIC × Zee Media TV quiz", "points": "2|embassy clients: Royal Thai Embassy, Embassy of Spain · LIC × Zee Media|TV quiz show marketing", "stats": [{"value": "1,000+", "label": "Participants in the festival quiz I ran"}, {"value": "↑ 35%", "label": "Student participation, Royal Thai Embassy project"}, {"value": "29", "label": "Indian states covered by my outreach databases"}, {"value": "50k", "label": "Students reached for quiz events"}]}], "tools": [{"tool": "Jira", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Confluence", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "ServiceNow", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Smartsheet", "group": "Delivery & ITSM", "level": "Expert"}, {"tool": "Microsoft 365", "group": "Productivity & finance", "level": "Expert"}, {"tool": "AFAS", "group": "Productivity & finance", "level": "Expert"}, {"tool": "Microsoft Entra ID", "group": "Security & access", "level": "Delivered with"}, {"tool": "SailPoint Identity Security Cloud", "group": "Security & access", "level": "Delivered with"}, {"tool": "Microsoft Defender", "group": "Security & access", "level": "Delivered with"}, {"tool": "Azure WAF", "group": "Security & access", "level": "Delivered with"}, {"tool": "Aikido", "group": "Security & access", "level": "Delivered with"}, {"tool": "Holm Security", "group": "Security & access", "level": "Delivered with"}, {"tool": "Datadog", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "CData Arc (ArcESB)", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "DiliTrust", "group": "Monitoring & integration", "level": "Delivered with"}, {"tool": "Microsoft Copilot", "group": "AI for reporting", "level": "Delivered with"}, {"tool": "Claude", "group": "AI for reporting", "level": "Delivered with"}], "rasci": [{"id": "r01", "area": "Project planning & oversight", "responsibility": "Project planning & scheduling", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r02", "area": "Project planning & oversight", "responsibility": "Delivery oversight & progress tracking", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r03", "area": "Project planning & oversight", "responsibility": "Reporting to senior leadership", "kirti": "R", "head_ops": "A", "tech_lead": "I", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r04", "area": "Project planning & oversight", "responsibility": "Day-to-day delivery decisions", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r05", "area": "Escalation & incident management", "responsibility": "First point of escalation — delivery & vendor issues", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r06", "area": "Escalation & incident management", "responsibility": "Incident triage & initial response", "kirti": "R+A", "head_ops": "I", "tech_lead": "S", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r07", "area": "Escalation & incident management", "responsibility": "Escalation to manager — strategic or high-risk issues", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r08", "area": "Escalation & incident management", "responsibility": "Stakeholder pressure management", "kirti": "R+A", "head_ops": "I", "tech_lead": "I", "stakeholder": "C", "vendor": "I", "held": "★"}, {"id": "r09", "area": "Stakeholder & vendor management", "responsibility": "Vendor relationship management", "kirti": "R+A", "head_ops": "I", "tech_lead": "C", "stakeholder": "I", "vendor": "C", "held": "★"}, {"id": "r10", "area": "Stakeholder & vendor management", "responsibility": "Stakeholder & vendor meetings — representation", "kirti": "R", "head_ops": "I", "tech_lead": "S", "stakeholder": "A", "vendor": "C", "held": ""}, {"id": "r11", "area": "Stakeholder & vendor management", "responsibility": "Decisions in meetings without tech resource present", "kirti": "R+A", "head_ops": "I", "tech_lead": "I", "stakeholder": "I", "vendor": "I", "held": "★"}, {"id": "r12", "area": "Stakeholder & vendor management", "responsibility": "Client-facing communication on delivery status", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r13", "area": "Process & ways of working", "responsibility": "Ways of working design & improvement", "kirti": "R", "head_ops": "A", "tech_lead": "C", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r14", "area": "Process & ways of working", "responsibility": "Technical decisions within delivery scope", "kirti": "I", "head_ops": "I", "tech_lead": "R+A", "stakeholder": "I", "vendor": "I", "held": ""}, {"id": "r15", "area": "Process & ways of working", "responsibility": "Strategic direction & resourcing decisions", "kirti": "C", "head_ops": "A", "tech_lead": "R+A", "stakeholder": "I", "vendor": "I", "held": ""}], "credentials": [{"id": "psm1", "group": "Professional certifications", "name": "Professional Scrum Master™ I (PSM I)", "issuer": "Scrum.org", "issued": "Dec 2025", "verify": "https://www.scrum.org/certificates/1281742"}, {"id": "pspo1", "group": "Professional certifications", "name": "Professional Scrum Product Owner™ I (PSPO I)", "issuer": "Scrum.org", "issued": "Dec 2025", "verify": "https://www.scrum.org/certificates/1282089"}, {"id": "pgpm", "group": "Professional certifications", "name": "Post Graduate Program in Project Management", "issuer": "Isenberg School of Management, UMass Amherst with Simplilearn", "issued": "Mar 2023", "verify": "https://success.simplilearn.com/c4bea512-7ae9-41e2-821c-ccece8874b2a"}, {"id": "lssgb", "group": "Professional certifications", "name": "Lean Six Sigma Green Belt (LSSGB)", "issuer": "Simplilearn", "issued": "Sep 2022", "verify": "https://certificates.simplicdn.net/share/3741829_1662150015.pdf"}, {"id": "msc", "group": "Education", "name": "MSc Business Analytics", "issuer": "TIAS School for Business and Society", "issued": "", "verify": ""}, {"id": "itil", "group": "Knowledge areas", "name": "ITIL", "issuer": "", "issued": "", "verify": ""}, {"id": "itsm", "group": "Knowledge areas", "name": "IT service management (ITSM)", "issuer": "", "issued": "", "verify": ""}, {"id": "pg_asm", "group": "Project management programme modules", "name": "Agile Scrum Master", "issuer": "Simplilearn", "issued": "Aug 2022", "verify": ""}, {"id": "pg_pmo", "group": "Project management programme modules", "name": "Implementing a PMO", "issuer": "Simplilearn", "issued": "Jun 2022", "verify": ""}, {"id": "pg_rmp", "group": "Project management programme modules", "name": "PMI Risk Management Professional (course)", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "pg_msp", "group": "Project management programme modules", "name": "Microsoft® Project 2019", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "pg_cdt", "group": "Project management programme modules", "name": "Customer Centric Digital Transformation", "issuer": "Simplilearn", "issued": "May 2022", "verify": ""}, {"id": "g_fpm", "group": "Project, risk & quality courses", "name": "Foundations of Project Management", "issuer": "Google", "issued": "Sep 2021", "verify": "https://coursera.org/verify/GS5PZ2JHU496"}, {"id": "mb_risk", "group": "Project, risk & quality courses", "name": "Risk Management Basics", "issuer": "Mercedes-Benz AG", "issued": "Sep 2022", "verify": ""}, {"id": "li_6s", "group": "Project, risk & quality courses", "name": "Six Sigma Foundations", "issuer": "LinkedIn", "issued": "Feb 2020", "verify": ""}, {"id": "ph_cyber", "group": "Security & privacy courses", "name": "Cyber Resilience Certificate 2026", "issuer": "Phished", "issued": "2026 · valid until Jan 2028", "verify": ""}, {"id": "sl_cyber", "group": "Security & privacy courses", "name": "Introduction to Cyber Security", "issuer": "Simplilearn", "issued": "Dec 2021", "verify": ""}, {"id": "ibm_priv", "group": "Security & privacy courses", "name": "Data Privacy Fundamentals", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "ibm_ds", "group": "Data & analytics courses", "name": "Data Science Foundations – Level 1", "issuer": "IBM", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_ml", "group": "Data & analytics courses", "name": "Machine Learning with R – Level 1", "issuer": "IBM", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_ta", "group": "Data & analytics courses", "name": "Text Analytics 101", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "ibm_stat", "group": "Data & analytics courses", "name": "Statistics 101", "issuer": "IBM / Cognitive Class", "issued": "Oct 2019", "verify": ""}, {"id": "ibm_bc", "group": "Data & analytics courses", "name": "IBM Blockchain Essentials V2", "issuer": "IBM", "issued": "Nov 2019", "verify": ""}, {"id": "mq_xl", "group": "Data & analytics courses", "name": "Excel Skills for Business: Essentials", "issuer": "Macquarie University", "issued": "May 2021", "verify": ""}]};</script>
 <script>
 window.dash=(function(){
-  var D=window.__DATA__, calcs={}, subs=[];
+  var D=window.__DATA__, calcs={}, subs=[], DEF={desk:'System team desk'}, P=Object.assign({},DEF);
   function data(id){ if(id in D) return {status:'ok',data:D[id],columns:D[id].length?Object.keys(D[id][0]):[],refreshing:false,meta:[]};
-    if(id in calcs){ var c=calcs[id]; return {status:'ok',data:c.fn.apply(null,c.inputs.map(function(i){return data(i).data;})),refreshing:false,meta:[]}; }
+    if(id in calcs){ var c=calcs[id]; try{ return {status:'ok',data:c.fn.apply(null,c.inputs.map(function(i){return data(i).data;})),refreshing:false,meta:[]}; }catch(e){ console.error(e); return {status:'error',data:[]}; } }
     return {status:'missing',data:[]}; }
   function run(){ subs.forEach(function(f){ try{f();}catch(e){console.error(e);} }); }
   var t; window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(run,150);});
   return {data:data, calc:function(id,o){calcs[id]=o;}, onData:function(f){subs.push(f); if(document.readyState!=='loading') f(); else document.addEventListener('DOMContentLoaded',f);},
-    setLink:function(id){ try{history.replaceState(null,'','#'+id);}catch(e){} }, colors:['#38c6f4','#8b8ff0'], refresh:function(){}, params:function(){return {};}, setParams:function(){}, resetParams:function(){}};
+    setLink:function(id){ try{history.replaceState(null,'','#'+id);}catch(e){} }, colors:['#38c6f4','#8b8ff0'], refresh:function(){},
+    params:function(){return P;}, setParams:function(o){ Object.assign(P,o||{}); run(); }, resetParams:function(){ P=Object.assign({},DEF); run(); }};
 })();
 </script>
 <script>
@@ -279,7 +439,36 @@ dash.calc('resp_display', {
     .map(r => { const h = Number(r.value); return {id: r.id, hours: h, shown: h >= 48 ? Math.round(h/24) + ' days' : (h < 1 ? Math.round(h*60) + ' min' : Math.round(h) + ' hrs')}; })
 });
 
+dash.calc('res_display', {
+  title: 'Resolution time, readable',
+  description: 'Median resolution time in days from the Jira figures, rounded to whole days.',
+  inputs: ['jira_kpis'],
+  fn: (jira_kpis) => jira_kpis
+    .filter(r => r.id === 'res_med_before' || r.id === 'res_med_after')
+    .map(r => ({id: r.id, days: Number(r.value), shown: Math.round(Number(r.value)) + ' days'}))
+});
+
+dash.calc('desk_change', {
+  title: 'Change, before to after',
+  description: 'For each desk metric: percent change for times (lower is better) and percentage-point change for shares, Q2 2024 to Q4 2025.',
+  inputs: ['desk_compare'],
+  fn: (desk_compare) => desk_compare.map(r => {
+    const b = Number(r.before), a = Number(r.after);
+    const good = r.better === 'lower' ? a < b : a > b;
+    let change;
+    if (r.unit === 'share') { const pts = Math.round((a - b) * 100); change = (pts >= 0 ? '↑ ' : '↓ ') + Math.abs(pts) + ' pts'; }
+    else { const pct = Math.round((a - b) / b * 100); change = (pct >= 0 ? '↑ ' : '↓ ') + Math.abs(pct) + '%' + (good ? (r.better === 'lower' ? ' faster' : '') : ''); }
+    return {id: r.id, change, good};
+  })
+});
+
+
 const kg = document.getElementById('kg');
+const DESK0 = 'System team desk';
+const desk = () => (dash.params() && dash.params().desk) || DESK0;
+document.querySelectorAll('#deskSeg button').forEach(b => b.addEventListener('click', () => dash.setParams({desk: b.getAttribute('data-desk')})));
+const LAST_Q = '2025-10-01'; // charts end at Q4 2025, the end of the before/after window
+const upto = d => d.qstart <= LAST_Q;
 
 const rows = id => { const d = dash.data(id); return d.status === 'ok' ? d.data : null; };
 const el = (tag, cls, attrs) => { const e = document.createElement(tag); if (cls) e.className = cls; if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
@@ -312,26 +501,44 @@ function tile(label, bigParts, ctxParts){
 const V = (src, id, text, cls) => { const s = mark(el('span', cls || ''), src, 'value', 'id', id); s.textContent = text; return s; };
 const arrow = () => txt(el('span', 'arr'), '→');
 
+function speedTiles(){
+  const box = document.getElementById('speedTiles'); const r = guard('desk_compare', box); if (!r) return;
+  const ch = rows('desk_change') || [];
+  const fmt = (u, v) => v === null || v === undefined ? '—' : u === 'share' ? P0(v) : u === 'hours' ? fmtHours(Number(v)) : Math.round(Number(v)) + ' days';
+  r.filter(d => d.desk === desk()).sort((x, y) => x.order - y.order).forEach(d => {
+    const c = el('div', 'card stat speed');
+    const big = el('span', 'big');
+    big.append(txt(mark(el('span', 'was'), 'desk_compare', 'before', 'id', d.id), fmt(d.unit, d.before)), arrow(), txt(mark(el('span', 'hi'), 'desk_compare', 'after', 'id', d.id), fmt(d.unit, d.after)));
+    c.append(big, txt(mark(el('span', 'lbl'), 'desk_compare', 'metric', 'id', d.id), d.metric));
+    const x = ch.find(y => y.id === d.id);
+    if (x) c.append(txt(mark(el('span', 'delta' + (x.good ? '' : ' bad')), 'desk_change', 'change', 'id', d.id), x.change));
+    const ctx = el('span', 'ctx');
+    ctx.append(txt(mark(el('span'), 'desk_compare', 'tickets_before', 'id', d.id), String(d.tickets_before)), ' → ', txt(mark(el('span'), 'desk_compare', 'tickets_after', 'id', d.id), String(d.tickets_after)), ' tickets');
+    c.append(ctx); box.append(c);
+  });
+}
+
 function kpiTiles(){
   const box = document.getElementById('kpiTiles'); const r = guard('jira_kpis', box); if (!r) return;
-  const resp = rows('resp_display') || [];
   box.append(
     tile('Tickets I worked on', [V('jira_kpis', 'tickets', K(get(r, 'tickets').value))], ['Commented, raised, assigned or watched']),
     tile('Jira projects and client spaces', [V('jira_kpis', 'projects', String(get(r, 'projects').value))], ['Client, product and internal projects']),
     tile('Tickets I commented on that were resolved', [V('jira_kpis', 'resolution', P0(get(r, 'resolution').value))], ['vs ', V('jira_kpis', 'watch_resolution', P0(get(r, 'watch_resolution').value)), ' of tickets I only watched']),
-    tile('Critical incidents resolved', [V('jira_kpis', 'critical_resolved', String(get(r, 'critical_resolved').value)), txt(el('span', 'of'), ' / '), V('jira_kpis', 'critical', String(get(r, 'critical').value), 'of')], [txt(el('span', 'good'), 'Every critical incident closed')]),
-    tile('Tickets answered within 24 hours', [V('jira_kpis', 'sys24_before', P0(get(r, 'sys24_before').value), 'was'), arrow(), V('jira_kpis', 'sys24_after', P0(get(r, 'sys24_after').value), 'good')], ['System team desk, Q2 2024 → Q4 2025'])
+    tile('Critical incidents resolved', [V('jira_kpis', 'critical_resolved', String(get(r, 'critical_resolved').value)), txt(el('span', 'of'), ' / '), V('jira_kpis', 'critical', String(get(r, 'critical').value), 'of')], [txt(el('span', 'good'), 'Every critical incident closed')])
   );
 }
 
-function trend(){
-  const box = document.getElementById('trend');
-  const raw = guard('first_response', box); if (!raw) return;
-  const data = raw.map(r => ({...r, q: new Date(r.qstart + 'T00:00:00Z'), v: Number(r.share_24h)}));
+function trend(){ lineChart('trend', 'first_response', 'share_24h', 'Share of tickets answered within 24 hours by quarter', p => `${P0(p.v)} within 24h · median ${fmtHours(Number(p.median_hours))}`); }
+function res30(){ lineChart('res30', 'resolution_by_quarter', 'share_30d', 'Share of tickets resolved within 30 days by quarter opened', p => `${P0(p.v)} resolved within 30 days · ${d3.format(',')(p.tickets)} tickets`); }
+
+function lineChart(boxId, dsId, field, aria, tipText){
+  const box = document.getElementById(boxId);
+  const raw = guard(dsId, box); if (!raw) return;
+  const data = raw.filter(upto).map(r => ({...r, q: new Date(r.qstart + 'T00:00:00Z'), v: Number(r[field])}));
   const desks = [...new Set(data.map(d => d.desk))];
-  const color = d => desks.indexOf(d) === 0 ? 'var(--primary)' : 'var(--cds-chart-muted)';
+  const color = d => d === desk() ? 'var(--primary)' : 'var(--cds-chart-muted)';
   const W = Math.max(280, box.clientWidth), H = 240;
-  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Share of tickets answered within 24 hours by quarter');
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', aria);
   const lastPts = desks.map(dk => data.filter(d => d.desk === dk).sort((a, b) => a.q - b.q).slice(-1)[0]);
   const probe = svg.append('g').style('font-size', '12px');
   const lw = d3.max(lastPts, p => { const t = probe.append('text').text(`${p.desk} ${P0(p.v)}`); const w = t.node().getComputedTextLength(); t.remove(); return w; }) || 0;
@@ -372,13 +579,50 @@ function trend(){
       const pts = data.filter(d => +d.q === +q);
       dot.selectAll('circle').data(pts).join('circle').attr('cx', d => x(d.q)).attr('cy', d => y(d.v)).attr('r', 4.5).attr('fill', d => color(d.desk)).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
       tip.innerHTML = ''; tip.append(txt(el('div', 't'), pts[0] ? pts[0].quarter : ''));
-      pts.forEach(p => { const r = el('div'); const sw = el('span', 'sw'); sw.style.background = color(p.desk); r.append(sw, `${p.desk}: ${P0(p.v)} within 24h · median ${fmtHours(Number(p.median_hours))}`); tip.append(r); });
+      pts.forEach(p => { const r = el('div'); const sw = el('span', 'sw'); sw.style.background = color(p.desk); r.append(sw, `${p.desk}: ${tipText(p)}`); tip.append(r); });
       tip.style.display = 'block';
       const bw = box.clientWidth, px = x(q) / W * bw, tw = tip.offsetWidth;
       tip.style.left = Math.max(0, Math.min(bw - tw, px + 12)) + 'px'; tip.style.top = '0px';
     })
     .on('mouseleave', () => { tip.style.display = 'none'; dot.selectAll('circle').remove(); });
 }
+
+function respBars(){ quarterBars('respBars', 'first_response', 'median_hours', d => fmtHours(d), 'Median time to first response by quarter'); }
+function wait7(){ quarterBars('wait7', 'wait7_by_quarter', 'share_over_7d', d => P0(d), 'Share of tickets waiting over 7 days for a first reply by quarter'); }
+
+function quarterBars(boxId, dsId, field, fmt, aria){
+  const box = document.getElementById(boxId);
+  const raw = guard(dsId, box); if (!raw) return;
+  const data = raw.filter(d => d.desk === desk() && upto(d)).map(d => ({...d, v: Number(d[field])})).sort((a, b) => a.qstart < b.qstart ? -1 : 1);
+  const W = Math.max(280, box.clientWidth), H = 280, m = {t: 26, r: 8, b: 28, l: 8};
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', aria + ', ' + desk());
+  const x = d3.scaleBand(data.map(d => d.quarter), [m.l, W - m.r]).padding(0.28);
+  const y = d3.scaleLinear([0, d3.max(data, d => d.v) || 1], [H - m.b, m.t]);
+  const bw = Math.min(32, x.bandwidth()), off = (x.bandwidth() - bw) / 2;
+  const isLast = d => d.qstart === LAST_Q;
+  svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', H - m.b).attr('y2', H - m.b).attr('stroke', 'var(--cds-chart-axis)');
+  svg.append('g').selectAll('rect').data(data).join('rect')
+    .attr('x', d => x(d.quarter) + off).attr('width', bw)
+    .attr('y', d => Math.min(y(d.v), H - m.b - 3)).attr('height', d => Math.max(3, H - m.b - y(d.v)))
+    .attr('rx', 4).attr('fill', d => isLast(d) ? 'var(--cyan)' : 'var(--peri)').attr('opacity', d => isLast(d) ? 1 : 0.55);
+  const narrow = W < 520;
+  svg.append('g').selectAll('text').data(data).join('text')
+    .attr('x', d => x(d.quarter) + x.bandwidth() / 2).attr('y', d => Math.min(y(d.v), H - m.b - 3) - 6)
+    .attr('text-anchor', 'middle').attr('fill', d => isLast(d) ? 'var(--cyan)' : 'var(--color-fg-muted)')
+    .style('font-size', d => isLast(d) ? (narrow ? '12px' : '14px') : (narrow ? '10px' : '12px')).style('font-weight', d => isLast(d) ? 700 : 500)
+    .text(d => fmt(d.v));
+  const every = W < 420 ? 2 : 1;
+  svg.append('g').selectAll('text').data(data.filter((d, i) => i % every === 0 || isLast(d))).join('text')
+    .attr('x', d => x(d.quarter) + x.bandwidth() / 2).attr('y', H - 8).attr('text-anchor', 'middle')
+    .attr('fill', d => isLast(d) ? 'var(--color-fg)' : 'var(--color-fg-muted)').style('font-weight', d => isLast(d) ? 600 : 400).style('font-size', narrow ? '10px' : '12px')
+    .text(d => d.quarter.replace(/^20(\d\d) (Q\d)$/, '$2 ’$1'));
+}
+
+function deskUI(){
+  document.querySelectorAll('#deskSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.getAttribute('data-desk') === desk())));
+  document.querySelectorAll('.deskName').forEach(n => { n.textContent = desk(); });
+}
+
 
 function itsm(){
   const box = document.getElementById('itsm'); const r = guard('itsm_mix', box); if (!r) return;
@@ -393,9 +637,9 @@ function itsm(){
 
 function delivery(){
   const box = document.getElementById('deliveryTiles'); const r = guard('delivery_highlights', box); if (!r) return;
-  ['onboardings', 'clients', 'system_team', 'unbilled', 'recurring'].forEach(id => {
+  ['prog_budget', 'prog_team', 'onboardings', 'clients', 'system_team', 'unbilled', 'recurring'].forEach(id => {
     const row = get(r, id); if (!row.id) return;
-    const c = el('div', 'card stat');
+    const c = el('div', 'card stat' + (id === 'prog_budget' ? ' wide' : ''));
     c.append(mark(el('span', 'lbl'), 'delivery_highlights', 'label', 'id', id)); c.lastChild.textContent = row.label;
     const b = mark(el('span', 'big' + (/^[↓↑]/.test(String(row.value)) ? ' good' : '')), 'delivery_highlights', 'value', 'id', id); b.textContent = row.value; c.append(b);
     const n = mark(el('span', 'ctx'), 'delivery_highlights', 'note', 'id', id); n.textContent = row.note; c.append(n);
@@ -451,9 +695,14 @@ function roles(){
     const hl = el('div', 'hl');
     hl.append(txt(mark(el('span', 'big num'), 'career', 'headline', 'order', row.order), row.headline), txt(mark(el('span', 'note'), 'career', 'headline_label', 'order', row.order), row.headline_label));
     c.append(left, hl);
+    if (Array.isArray(row.stats) && row.stats.length) {
+      const g = el('div', 'jstats', {'data-source': 'career'});
+      row.stats.forEach(st => { const it = el('div', 'js'); it.append(txt(el('span', 'jv' + (/^[↓↑]/.test(st.value) ? ' hi' : '')), st.value), txt(el('span', 'jl'), st.label)); g.append(it); });
+      c.append(g);
+    }
     if (row.points && row.points !== 'Details to be added') {
       const ul = mark(el('ul', 'pts'), 'career', 'points', 'order', row.order);
-      String(row.points).split(' · ').forEach(t => ul.append(txt(el('li'), t)));
+      String(row.points).split(' · ').forEach(t => { const [lead, rest] = t.includes('|') ? t.split('|') : ['', t]; const li = el('li'); if (lead) li.append(txt(el('b', 'pn' + (/^[↓↑]/.test(lead) ? ' hi' : '')), lead)); li.append(txt(el('span'), rest)); ul.append(li); });
       c.append(ul);
     }
     box.append(c);
@@ -505,11 +754,17 @@ function creds(){
   }
 }
 
-document.querySelectorAll('.kg nav a[data-go]').forEach(a => a.addEventListener('click', ev => { ev.preventDefault(); const t = document.getElementById(a.getAttribute('data-go')); if (t) { t.scrollIntoView({behavior: 'smooth'}); dash.setLink(t.id); } }));
+const navLinks = [...document.querySelectorAll('#sidenav a[data-go]')];
+const setOn = id => navLinks.forEach(a => { const on = a.getAttribute('data-go') === id; a.classList.toggle('on', on); if (on && a.scrollIntoView && window.innerWidth <= 980) { const n = a.parentNode; n.scrollTo({left: a.offsetLeft - 8, behavior: 'smooth'}); } });
+navLinks.forEach(a => a.addEventListener('click', ev => { ev.preventDefault(); const t = document.getElementById(a.getAttribute('data-go')); if (t) { t.scrollIntoView({behavior: 'smooth', block: 'start'}); setOn(t.id); dash.setLink(t.id); } }));
+try {
+  const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) setOn(e.target.id); }); }, {root: document, rootMargin: '-35% 0px -60% 0px', threshold: 0});
+  navLinks.forEach(a => { const t = document.getElementById(a.getAttribute('data-go')); if (t) io.observe(t); });
+} catch (e) {}
 
 let linked = false;
 dash.onData(() => {
-  fillStatic(); kpiTiles(); trend(); itsm(); delivery(); rasci(); quotes(); roles(); tools(); creds();
+  fillStatic(); deskUI(); speedTiles(); kpiTiles(); respBars(); wait7(); trend(); res30(); itsm(); delivery(); rasci(); quotes(); roles(); tools(); creds();
   if (!linked && location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) { t.scrollIntoView(); linked = true; } }
 });
 })();
